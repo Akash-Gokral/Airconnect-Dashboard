@@ -1,12 +1,18 @@
 import React from 'react'
-import {Link } from 'react-router-dom'
+import {Link, Navigate, useNavigate } from 'react-router-dom'
 import airconnect from "../Assets/Airconnect Logo 1.png"
 
 const NavBar = () => {
+
+	const navigate=useNavigate();
+
+const signout =()=>{
+	localStorage.removeItem("token")
+	navigate("/signin")
+}
+
   return (
     <>
-
-
            <div className="main-header side-header sticky">
 			<div className="container-fluid main-container">
 				<div className="main-header-left sidemenu ">
@@ -16,7 +22,7 @@ const NavBar = () => {
 				<Link to="/">	<img src={airconnect} />		</Link>
 				</div>
 				<div className="main-header-right">
-				<Link to="/signin" className='signin_text'>Signout</Link>
+			<button onClick={signout}>Signout</button>
 					<button className="navbar-toggler navresponsive-toggler d-lg-none ms-auto collapsed" type="button"
 						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
 						aria-controls="navbarSupportedContent-4" aria-expanded="false"

@@ -11,37 +11,27 @@ const [password,setPassword] = useState("")
 
 const navigate = useNavigate();
 
-// const postData=async(url,body)=>{
-// 	try{
-// 	   var response= await axios({
-// 		  method:"POST",
-// 		  mode:"CORS",
-// 		  url:`${ServerURL}/${url}`,
-// 		  headers:{"content-type":"application/json"},
-// 		  data:body})
-// 	   var result= await response.data
-// 	   return result
-// 	}
-// 	catch(e){
-// 		return null
-// 	}
-//    }
 	const submit=(e)=>{
 		e.preventDefault();
          console.warn(mobile,password);
 		
-		 axios.post("http://143.198.124.185/api/login",{
+	     axios.post("http://143.198.124.185/api/login",{
 			username:mobile,
 			password:password,
 		}
 		).then(result=>{
 			console.log(result.data)
-			localStorage.setItem("token",result.data.token )
-			navigate("/")
-			alert("Login Successfully")
+			if(result.data.st == false){
+				alert(result.data.msg)
+			}else{
+				localStorage.setItem("token",result.data.token )
+				navigate("/")
+				alert(result.data.msg)
+			}
 		
 		}).catch(error=>{
 			console.log(error)	
+			
 		}) 
 	}
 

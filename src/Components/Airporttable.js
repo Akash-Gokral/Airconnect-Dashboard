@@ -32,9 +32,7 @@ const Airporttable = () => {
 
                                         </td>
                                     </tr>
-                     
-
-                        </tbody>
+                                    </tbody>
                     </table>
                 </div>
                 <Footer/> 

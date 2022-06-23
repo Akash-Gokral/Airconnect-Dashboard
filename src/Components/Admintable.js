@@ -1,8 +1,39 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import Footer from './Footer'
 import NavBar from './NavBar'
 
 const Admintable = () => {
+
+    const [admindata,setAdmindata] = useState({
+        id:"",
+        name:"",
+        email:"",
+        mobile:"",
+        isblock:""
+    })
+
+useEffect(()=>{
+    axios.post("http://143.198.124.185/api/getAdminList",{ headers:{"content-type":"application/json"}})
+    .then((result)=>{
+     alert(JSON.stringify(result))
+    //  const newData = result.data.map((res)=>{
+    //     return{
+    //         id:res.id,
+    //         name:res.name,
+    //         email:res.email,
+    //         mobile:res.mobile,
+    //         isblock:res.isblock
+    //     }
+    //  })
+    //  setAdmindata(newData)
+    //  console.log(admindata)
+    }).catch(error=>{
+        console.log(error)
+    })
+},[])
+
+
   return (
     <>
     <NavBar/>
@@ -22,8 +53,8 @@ const Admintable = () => {
                             </tr>
                         </thead>
                         <tbody>
-                       
-                                    <tr>
+                   
+                                     <tr>
                                         <td>1</td>
                                         <td>Rohan</td>
                                         <td>rohanvaja01@gmail.com</td>
@@ -34,6 +65,8 @@ const Admintable = () => {
 
                                         </td>
                                     </tr>
+                  
+                                  
                      
 
                         </tbody>
