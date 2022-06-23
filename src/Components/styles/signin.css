@@ -1,0 +1,16 @@
+.sign-in-btn{
+  background:#3F6DB8;
+  color: #fff;
+
+}
+.theme-color{
+  color: #3F6DB8;
+  font-weight: 600;
+}
+
+.sign-in-btn:hover{
+    color: black !important;
+}
+.signin_text{
+  margin-right: 15px;
+}
