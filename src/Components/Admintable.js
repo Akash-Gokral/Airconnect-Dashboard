@@ -42,7 +42,16 @@ const Admintable = () => {
     },
     {
       name: "Edit Admin",
-      selector: (row) => <button className="edit_delete_btn" >Edit</button>,
+      selector: (row) => (
+        <button
+          className="edit_delete_btn"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          onClick={() => editadmin()}
+        >
+          Edit
+        </button>
+      ),
       sortable: true,
     },
     {
@@ -89,7 +98,6 @@ const Admintable = () => {
   // Delete Admin
 
   const deleteadmin = async (row) => {
-
     const items = localStorage.getItem("token");
     console.log(items);
     let token = "bearer " + items;
@@ -107,18 +115,43 @@ const Admintable = () => {
         },
       }
     );
-    const result = await res.data
+    const result = await res.data;
     if (result.st) {
       window.alert("User has been deleted");
       fetchAdminData();
+    } else {
+      alert(result.msg);
     }
-    else{
-      alert(result.msg)
-    }
-
   };
 
+  // Edit Admin
 
+  const editadmin = async (row) => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+    alert(row.id);
+
+    const res = await axios.post(
+      `http://143.198.124.185/api/insertEditAdmin`,
+      {
+        uid: 1,
+        id: row.id,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.data;
+    if (result.st) {
+      window.alert("User has been deleted");
+      fetchAdminData();
+    } else {
+      alert(result.msg);
+    }
+  };
 
   useEffect(() => {
     fetchAdminData();
@@ -142,6 +175,58 @@ const Admintable = () => {
           />
         </div>
       </div>
+
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Edit Admin
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+            <form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">ID</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+    <label for="exampleInputEmail1" class="form-label">Name</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+    <label for="exampleInputEmail1" class="form-label">Mobile</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+  </div>
+ 
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Footer />
     </>
   );
