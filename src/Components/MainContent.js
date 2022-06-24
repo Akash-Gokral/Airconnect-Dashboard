@@ -19,7 +19,7 @@ const MainContent = () => {
   return (
     <>
              <div className="div">
-             <h2 className=""> Welcome To Dashboard</h2>
+             <h2 className="maincontent_heading"> Welcome To Dashboard</h2>
              </div>
     </>
   )

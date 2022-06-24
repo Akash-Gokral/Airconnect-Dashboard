@@ -14,3 +14,9 @@
 .signin_text{
   margin-right: 15px;
 }
+.jumps-prevent{
+  padding: 0 !important;
+}
+.div{
+  height: 90vh !important;
+}

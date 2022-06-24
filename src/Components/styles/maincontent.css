@@ -1,13 +1,27 @@
-.div{
+
+
+.admintable_container{
+    height: 90vh !important;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
     flex-direction:column;
-  }
-  .main-content-title{
-    height: 70vh;
-  }
+}
+.admintable{
+   width: 70% !important;
+   margin-top: 65px;
+}
+.inputs{
+    justify-content: flex-end !important;
+}
+
+.maincontent_heading{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
 
 .inputs p {
     width: 65px !important;

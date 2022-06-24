@@ -25,7 +25,7 @@ const navigate = useNavigate();
 				alert(result.data.msg)
 			}else{
 				localStorage.setItem("token",result.data.token )
-				navigate("/")
+				navigate("/home")
 				alert(result.data.msg)
 			}
 		

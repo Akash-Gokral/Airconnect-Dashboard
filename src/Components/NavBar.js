@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link, Navigate, useNavigate } from 'react-router-dom'
+import {Link,useNavigate } from 'react-router-dom'
 import airconnect from "../Assets/Airconnect Logo 1.png"
 
 const NavBar = () => {
@@ -19,7 +19,7 @@ const signout =()=>{
 					<a className="main-header-menu-icon" href="" id="mainSidebarToggle"><span></span></a>
 				</div>
 				<div className="main-header-left horizontal">
-				<Link to="/">	<img src={airconnect} />		</Link>
+				<Link to="/home"><img src={airconnect} /></Link>
 				</div>
 				<div className="main-header-right">
 			<button onClick={signout}>Signout</button>
@@ -70,9 +70,14 @@ const signout =()=>{
 				<ul className="nav  hor-menu">
 					<li className="nav-label">Users</li>
 					<li className="nav-item">
+					<Link to="/home">	<a className="nav-link"><i className="fe fe-airplay"></i><span
+								className="sidemenu-label">Dashboard</span></a></Link>
+					</li>
+					<li className="nav-item">
 					<Link to="/admintable">	<a className="nav-link"><i className="fe fe-airplay"></i><span
 								className="sidemenu-label">Admins</span></a></Link>
 					</li>
+				
 					<li className="nav-label">Masters</li>
 					<li className="nav-item">
 					<Link to="/airporttable">	<a className="nav-link with-sub" href=""><i className="fe fe-box"></i><span
