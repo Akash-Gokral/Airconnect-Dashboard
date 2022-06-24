@@ -8,9 +8,25 @@
     flex-direction:column;
 }
 .admintable{
-   width: 70% !important;
-   margin-top: 65px;
+   width: 65% !important;
+   margin-top: 60px;
 }
+.edit_delete_btn{
+    padding: 5px 15px;
+    border: none;
+    background: transparent;
+    background: rgb(236, 135, 135);
+    color: #fff;
+    border-radius: 5px;
+}
+.signoutbtn{
+    padding: 5px 15px;
+    background:#3F6DB8;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+}
+
 .inputs{
     justify-content: flex-end !important;
 }

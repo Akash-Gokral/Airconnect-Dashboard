@@ -1,16 +1,17 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
+import DataTable from "react-data-table-component";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
-const Admintable = () => {
+const Airplanetable = () => {
+
+    
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
   const [page, setPage] = useState();
   const [perPage, setPerPage] = useState();
-  const [deleteUser, setDeleteUser] = useState(false);
 
   const navigate = useNavigate();
 
@@ -26,45 +27,36 @@ const Admintable = () => {
       sortable: true,
     },
     {
-      name: "Email",
-      selector: (row) => row.email,
+      name: "Plane No",
+      selector: (row) => row.plane_no,
       sortable: true,
     },
     {
-      name: "Mobile",
-      selector: (row) => row.mobile,
-      sortable: true,
-    },
-    {
-      name: "isBlock",
-      selector: (row) => row.isblock,
+      name: "Capacity",
+      selector: (row) => row.capacity,
       sortable: true,
     },
     {
       name: "Edit Admin",
-      selector: (row) => <button className="edit_delete_btn" >Edit</button>,
+      selector: (row) =><button className="edit_delete_btn">Edit</button>,
       sortable: true,
     },
     {
       name: "Delete Admin",
-      selector: (row) => (
-        <button className="edit_delete_btn" onClick={() => deleteadmin(row)}>
-          Delete
-        </button>
-      ),
+      selector: (row) =><button className="edit_delete_btn" onClick={() => deleteairplane(row)}>Delete</button>,
       sortable: true,
     },
   ];
 
-  // Get Admin user
-  const fetchAdminData = async () => {
+
+  const fetchAirplaneData = async () => {
     const items = localStorage.getItem("token");
     console.log(items);
     let token = "bearer " + items;
 
     await axios
       .post(
-        `http://143.198.124.185/api/getAdminList`,
+        `http://143.198.124.185/api/master/airplaneList`,
         {
           page: page,
           per_page: perPage,
@@ -85,10 +77,10 @@ const Admintable = () => {
         window.location.reload();
       });
   };
-
+   
   // Delete Admin
 
-  const deleteadmin = async (row) => {
+  const deleteairplane = async (row) => {
 
     const items = localStorage.getItem("token");
     console.log(items);
@@ -96,7 +88,7 @@ const Admintable = () => {
     alert(row.id);
 
     const res = await axios.post(
-      `http://143.198.124.185/api/deleteAdmin`,
+      `http://143.198.124.185/api/master/deleteAirplane`,
       {
         uid: 1,
         id: row.id,
@@ -109,8 +101,8 @@ const Admintable = () => {
     );
     const result = await res.data
     if (result.st) {
-      window.alert("User has been deleted");
-      fetchAdminData();
+      window.alert("Airplane has been deleted");
+      fetchAirplaneData();
     }
     else{
       alert(result.msg)
@@ -119,13 +111,14 @@ const Admintable = () => {
   };
 
 
-
-  useEffect(() => {
-    fetchAdminData();
+  useEffect(()=>{
+    fetchAirplaneData();
     if (!localStorage.getItem("token")) {
       navigate("/signin");
     }
-  }, [search, page, perPage]);
+  }, [page, perPage])
+  
+
   return (
     <>
       <NavBar />
@@ -134,12 +127,7 @@ const Admintable = () => {
           <div className="d-flex inputs p-2 ">
             <p>Search:</p> <input type="text" className="ms-2"></input>
           </div>
-          <DataTable
-            title="Admin Details"
-            columns={columns}
-            data={data}
-            pagination
-          />
+          <DataTable title="Airplane Details" columns={columns} data={data} pagination />
         </div>
       </div>
       <Footer />
@@ -147,4 +135,4 @@ const Admintable = () => {
   );
 };
 
-export default Admintable;
+export default Airplanetable;

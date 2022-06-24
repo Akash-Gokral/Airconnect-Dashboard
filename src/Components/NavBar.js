@@ -22,7 +22,7 @@ const signout =()=>{
 				<Link to="/home"><img src={airconnect} /></Link>
 				</div>
 				<div className="main-header-right">
-			<button onClick={signout}>Signout</button>
+			<button onClick={signout} className="signoutbtn">Signout</button>
 					<button className="navbar-toggler navresponsive-toggler d-lg-none ms-auto collapsed" type="button"
 						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
 						aria-controls="navbarSupportedContent-4" aria-expanded="false"
@@ -85,9 +85,8 @@ const signout =()=>{
 				
 					</li>
 					<li className="nav-item">
-						<a className="nav-link with-sub" href=""><i className="fe fe-award"></i>
-							<span className="sidemenu-label">Airplane</span>
-						</a>
+					<Link to="/airplanetable">		<a className="nav-link with-sub" href=""><i className="fe fe-award"></i>
+							<span className="sidemenu-label">Airplane</span></a></Link>
 					</li>
 				</ul>
 			</div>
