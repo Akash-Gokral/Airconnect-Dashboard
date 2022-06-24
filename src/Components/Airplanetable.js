@@ -101,7 +101,7 @@ const Airplanetable = () => {
     );
     const result = await res.data
     if (result.st) {
-      window.alert("Airplane has been deleted");
+      window.alert("Airplane details has been deleted");
       fetchAirplaneData();
     }
     else{

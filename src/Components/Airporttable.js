@@ -15,6 +15,40 @@ const Airporttable = () => {
 
   const navigate = useNavigate();
 
+  
+  const columns = [
+    {
+      name: "ID",
+      selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Code",
+      selector: (row) => row.code,
+      sortable: true,
+    },
+    {
+      name: "Terminal",
+      selector: (row) => row.terminal,
+      sortable: true,
+    },
+    {
+      name: "Edit Admin",
+      selector: (row) =><button className="edit_delete_btn">Edit</button>,
+      sortable: true,
+    },
+    {
+      name: "Delete Admin",
+      selector: (row) =><button className="edit_delete_btn" onClick={() => deleteairport(row)}>Delete</button>,
+      sortable: true,
+    },
+  ];
+
 
 
   const fetchAirportData = async () => {
@@ -46,10 +80,37 @@ const Airporttable = () => {
       });
   };
 
-   const deleteadmin =()=>{
+  // Delete Admin
 
-   }
+  const deleteairport = async (row) => {
 
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+    alert(row.id);
+
+    const res = await axios.post(
+      `http://143.198.124.185/api/master/deleteAirport`,
+      {
+        uid: 1,
+        id: row.id,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.data
+    if (result.st) {
+      window.alert("Airport details has been deleted");
+      fetchAirportData();
+    }
+    else{
+      alert(result.msg)
+    }
+
+  };
 
   
   useEffect(()=>{
@@ -60,39 +121,6 @@ const Airporttable = () => {
   }, [page, perPage])
 
 
-    const columns = [
-        {
-          name: "ID",
-          selector: (row) => row.id,
-          sortable: true,
-        },
-        {
-          name: "Name",
-          selector: (row) => row.name,
-          sortable: true,
-        },
-        {
-          name: "Code",
-          selector: (row) => row.code,
-          sortable: true,
-        },
-        {
-          name: "Terminal",
-          selector: (row) => row.terminal,
-          sortable: true,
-        },
-        {
-          name: "Edit Admin",
-          selector: (row) =><button className="edit_delete_btn">Edit</button>,
-          sortable: true,
-        },
-        {
-          name: "Delete Admin",
-          selector: (row) =><button className="edit_delete_btn">Delete</button>,
-          sortable: true,
-        },
-      ];
-    
 
   return (
     <>
