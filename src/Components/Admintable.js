@@ -128,12 +128,15 @@ const Admintable = () => {
   };
 
   const editPop = (row) => {
+    editadminPopup();
     setEmail(row.email);
     setName(row.name);
     setId(row.id);
     setMobile(row.mobile);
-
-    editadminPopup();
+    editadmin();
+    fetchAdminData();
+  
+    
   };
 
   const editadminPopup = () => {
@@ -195,7 +198,7 @@ const Admintable = () => {
                   <button
                     type="submit"
                     className=" popupbtn"
-                    onClick={() => editadmin()}
+                    onClick={() => editPop()}
                   >
                     Submit
                   </button>
@@ -241,6 +244,7 @@ const Admintable = () => {
     if (result) {
       console.log(result)
       alert("updated");
+      // setData(result)
       // editadminPopup();
     } else {
       alert("error");
