@@ -18,9 +18,7 @@ const signout =()=>{
 				<div className="main-header-left sidemenu ">
 					<a className="main-header-menu-icon" href="" id="mainSidebarToggle"><span></span></a>
 				</div>
-				<div className="main-header-left horizontal">
 				<Link to="/home"><img src={airconnect} /></Link>
-				</div>
 				<div className="main-header-right">
 			<button onClick={signout} className="signoutbtn">Signout</button>
 					<button className="navbar-toggler navresponsive-toggler d-lg-none ms-auto collapsed" type="button"
@@ -66,6 +64,7 @@ const signout =()=>{
 
 
 		<div className="main-sidebar main-sidemenu main-sidebar-sticky side-menu">
+		<Link to="/home"><img src={airconnect} /></Link>
 			<div className="main-sidebar-body">
 				<ul className="nav  hor-menu">
 					<li className="nav-label">Users</li>

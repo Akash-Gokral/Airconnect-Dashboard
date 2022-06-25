@@ -10,7 +10,10 @@ const Admintable = () => {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState();
   const [perPage, setPerPage] = useState();
-  const [deleteUser, setDeleteUser] = useState(false);
+  const [email, setEmail] = useState();
+  const [name, setName] = useState();
+  const [id, setId] = useState();
+  const [mobile, setMobile] = useState();
 
   const navigate = useNavigate();
 
@@ -47,7 +50,7 @@ const Admintable = () => {
           className="edit_delete_btn"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
-          onClick={() => editadmin()}
+          onClick={() => editPop(row)}
         >
           Edit
         </button>
@@ -124,32 +127,123 @@ const Admintable = () => {
     }
   };
 
+  const editPop = (row) => {
+    setEmail(row.email);
+    setName(row.name);
+    setId(row.id);
+    setMobile(row.mobile);
+
+    editadminPopup();
+  };
+
+  const editadminPopup = () => {
+    return (
+      <div
+        className="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="staticBackdropLabel">
+                Add / Edit Admin
+              </h5>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="mb-3">
+                  <label className="form-label">ID</label>
+                  <input
+                    className="form-control"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                  />
+
+                  <label className="form-label">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <label for="exampleInputEmail1" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <label className="form-label">Mobile</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                  />
+                </div>
+
+                <div className="d-flex justify-content-between w-50">
+                  <button
+                    type="submit"
+                    className=" popupbtn"
+                    onClick={() => editadmin()}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    className="popupbtn"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Edit Admin
 
-  const editadmin = async (row) => {
+  const editadmin = async () => {
     const items = localStorage.getItem("token");
     console.log(items);
     let token = "bearer " + items;
-    alert(row.id);
 
-    const res = await axios.post(
+    const result = await axios.post(
       `http://143.198.124.185/api/insertEditAdmin`,
       {
         uid: 1,
-        id: row.id,
+        id: id,
+        name: name,
+        email: email,
+        mobile: mobile,
       },
       {
         headers: {
+          "content-type": "application/json",
           Authorization: token,
         },
       }
     );
-    const result = await res.data;
-    if (result.st) {
-      window.alert("User has been deleted");
-      fetchAdminData();
+    if (result) {
+      console.log(result)
+      alert("updated");
+      // editadminPopup();
     } else {
-      alert(result.msg);
+      alert("error");
     }
   };
 
@@ -164,8 +258,16 @@ const Admintable = () => {
       <NavBar />
       <div className="admintable_container">
         <div className="admintable">
-          <div className="d-flex inputs p-2 ">
-            <p>Search:</p> <input type="text" className="ms-2"></input>
+          <div className="d-flex inputs  p-2 ">
+            <button
+              className="popupbtn"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              Add Admin
+            </button>
+            {/* <p className="ms-5">Search:</p>
+            <input type="text" className="ms-2"></input> */}
           </div>
           <DataTable
             title="Admin Details"
@@ -176,56 +278,7 @@ const Admintable = () => {
         </div>
       </div>
 
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">
-                Edit Admin
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-            <form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">ID</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-    <label for="exampleInputEmail1" class="form-label">Name</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-    <label for="exampleInputEmail1" class="form-label">Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-    <label for="exampleInputEmail1" class="form-label">Mobile</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-  </div>
- 
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      {editadminPopup()}
 
       <Footer />
     </>

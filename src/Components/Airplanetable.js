@@ -129,7 +129,14 @@ const Airplanetable = () => {
       <div className="admintable_container">
         <div className="admintable">
           <div className="d-flex inputs p-2 ">
-            <p>Search:</p> <input type="text" className="ms-2"></input>
+            <button
+              className="popupbtn"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              Add Airplane details
+            </button>
+            {/* <p>Search:</p> <input type="text" className="ms-2"></input> */}
           </div>
           <DataTable
             title="Airplane Details"
@@ -153,69 +160,35 @@ const Airplanetable = () => {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Edit Admin
+                Add / Edit Airplane Details
               </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
             </div>
             <div class="modal-body">
               <form>
                 <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">
-                    ID
-                  </label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                  />
-                  <label for="exampleInputEmail1" class="form-label">
-                    Name
-                  </label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                  />
-                  <label for="exampleInputEmail1" class="form-label">
-                    Plane No
-                  </label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                  />
-                  <label for="exampleInputEmail1" class="form-label">
-                    Capacity
-                  </label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                  />
+                  <label class="form-label">ID</label>
+                  <input class="form-control" />
+                  <label class="form-label">Name</label>
+                  <input class="form-control" />
+                  <label class="form-label">Plane No</label>
+                  <input class="form-control" />
+                  <label class="form-label">Capacity</label>
+                  <input class="form-control" />
                 </div>
 
-                <button type="submit" class="btn btn-primary">
-                  Submit
-                </button>
+                <div className="d-flex justify-content-between w-50">
+                  <button type="submit" class=" popupbtn">
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    class="popupbtn"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
               </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>

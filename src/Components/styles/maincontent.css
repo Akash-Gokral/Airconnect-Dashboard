@@ -15,7 +15,7 @@
     padding: 5px 15px;
     border: none;
     background: transparent;
-    background: rgb(236, 135, 135);
+    background: #3F6DB8;
     color: #fff;
     border-radius: 5px;
 }
@@ -25,6 +25,15 @@
     color: #fff;
     border: none;
     border-radius: 6px;
+}
+.popupbtn{
+    padding: 0px 5px !important;
+    border: none;
+    height: 45px    ;
+    background: transparent;
+    background: #3F6DB8;
+    color: #fff;
+    border-radius: 5px;
 }
 
 .inputs{
