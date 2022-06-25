@@ -133,10 +133,6 @@ const Admintable = () => {
     setName(row.name);
     setId(row.id);
     setMobile(row.mobile);
-    editadmin();
-    fetchAdminData();
-  
-    
   };
 
   const editadminPopup = () => {
@@ -196,9 +192,9 @@ const Admintable = () => {
 
                 <div className="d-flex justify-content-between w-50">
                   <button
-                    type="submit"
+                    type="button"
                     className=" popupbtn"
-                    onClick={() => editPop()}
+                    onClick={() => editadmin()}
                   >
                     Submit
                   </button>
@@ -226,25 +222,27 @@ const Admintable = () => {
     let token = "bearer " + items;
 
     const result = await axios.post(
-      `http://143.198.124.185/api/insertEditAdmin`,
-      {
-        uid: 1,
-        id: id,
-        name: name,
-        email: email,
-        mobile: mobile,
-      },
-      {
-        headers: {
-          "content-type": "application/json",
-          Authorization: token,
+        "http://143.198.124.185/api/insertEditAdmin",
+        {
+          uid: 1,
+          id: id,
+          name: name,
+          email: email,
+          mobile: mobile,
+          password:""
         },
-      }
-    );
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization:token,
+          },
+        }
+      )
+     
     if (result) {
-      console.log(result)
-      alert("updated");
-      // setData(result)
+      console.log(result);
+     alert("updated");
+     fetchAdminData();
       // editadminPopup();
     } else {
       alert("error");

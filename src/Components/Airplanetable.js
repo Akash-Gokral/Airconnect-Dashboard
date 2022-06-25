@@ -10,6 +10,10 @@ const Airplanetable = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState();
   const [perPage, setPerPage] = useState();
+  const [id, setId] = useState();
+  const [name, setName] = useState();
+  const [plane, setPlane] = useState();
+  const [capacity, setCapacity] = useState();
 
   const navigate = useNavigate();
 
@@ -35,12 +39,13 @@ const Airplanetable = () => {
       sortable: true,
     },
     {
-      name: "Edit Admin",
+      name: "Edit Airplane Details",
       selector: (row) => (
         <button
           className="edit_delete_btn"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
+          onClick={() => editairplane(row)}
         >
           Edit
         </button>
@@ -48,7 +53,7 @@ const Airplanetable = () => {
       sortable: true,
     },
     {
-      name: "Delete Admin",
+      name: "Delete Airplane Details",
       selector: (row) => (
         <button className="edit_delete_btn" onClick={() => deleteairplane(row)}>
           Delete
@@ -62,7 +67,6 @@ const Airplanetable = () => {
     const items = localStorage.getItem("token");
     console.log(items);
     let token = "bearer " + items;
-
     await axios
       .post(
         `http://143.198.124.185/api/master/airplaneList`,
@@ -116,6 +120,121 @@ const Airplanetable = () => {
     }
   };
 
+  const editairplane = (row) => {
+    editairplanePopup();
+    setName(row.name);
+    setId(row.id);
+    setPlane(row.plane_no);
+    setCapacity(row.capacity);
+  };
+
+  const editairplanePopup = () => {
+    return (
+      <div
+        className="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="staticBackdropLabel">
+                Add / Edit Airplane Details
+              </h5>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="mb-3">
+                  <label className="form-label">ID</label>
+                  <input
+                    className="form-control"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                  />
+
+                  <label className="form-label">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <label className="form-label">Plane no</label>
+                  <input
+                    className="form-control"
+                    value={plane}
+                    onChange={(e) => setPlane(e.target.value)}
+                  />
+                  <label className="form-label">Capacity</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={capacity}
+                    onChange={(e) => setCapacity(e.target.value)}
+                  />
+                </div>
+
+                <div className="d-flex justify-content-between w-50">
+                  <button
+                    type="button"
+                    className=" popupbtn"
+                    onClick={() => editairplanedata()}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    className="popupbtn"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Edit Admin
+
+  const editairplanedata = async () => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+
+    const result = await axios.post(
+      "http://143.198.124.185/api/master/insertEditAirplane",
+      {
+        uid: 1,
+        id: id,
+        name: name,
+        plane: plane,
+        capacity: capacity,
+      },
+      {
+        headers: {
+          "content-type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+
+    if (result) {
+      console.log(result);
+      alert("updated");
+      fetchAirplaneData();
+    } else {
+      alert("error");
+    }
+  };
+
   useEffect(() => {
     fetchAirplaneData();
     if (!localStorage.getItem("token")) {
@@ -136,7 +255,6 @@ const Airplanetable = () => {
             >
               Add Airplane details
             </button>
-            {/* <p>Search:</p> <input type="text" className="ms-2"></input> */}
           </div>
           <DataTable
             title="Airplane Details"
@@ -146,53 +264,7 @@ const Airplanetable = () => {
           />
         </div>
       </div>
-
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">
-                Add / Edit Airplane Details
-              </h5>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <label class="form-label">ID</label>
-                  <input class="form-control" />
-                  <label class="form-label">Name</label>
-                  <input class="form-control" />
-                  <label class="form-label">Plane No</label>
-                  <input class="form-control" />
-                  <label class="form-label">Capacity</label>
-                  <input class="form-control" />
-                </div>
-
-                <div className="d-flex justify-content-between w-50">
-                  <button type="submit" class=" popupbtn">
-                    Submit
-                  </button>
-                  <button
-                    type="button"
-                    class="popupbtn"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+      {editairplanePopup()}
 
       <Footer />
     </>

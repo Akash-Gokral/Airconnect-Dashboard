@@ -10,6 +10,10 @@ const Airporttable = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState();
   const [perPage, setPerPage] = useState();
+  const [id, setId] = useState();
+  const [name, setName] = useState();
+  const [code, setCode] = useState();
+  const [terminal, setTerminal] = useState();
 
   const navigate = useNavigate();
 
@@ -41,6 +45,7 @@ const Airporttable = () => {
           className="edit_delete_btn"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
+          onClick={() => editairport(row)}
         >
           Edit
         </button>
@@ -116,6 +121,121 @@ const Airporttable = () => {
     }
   };
 
+  const editairport = (row) => {
+    editairportPopup();
+    setName(row.name);
+    setId(row.id);
+    setCode(row.code);
+    setTerminal(row.terminal);
+  };
+
+  const editairportPopup = () => {
+    return (
+      <div
+        className="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="staticBackdropLabel">
+                Add / Edit Airport Details
+              </h5>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="mb-3">
+                  <label className="form-label">ID</label>
+                  <input
+                    className="form-control"
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                  />
+
+                  <label className="form-label">Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <label className="form-label">Code</label>
+                  <input
+                    className="form-control"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                  />
+                  <label className="form-label">Terminal</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={terminal}
+                    onChange={(e) => setTerminal(e.target.value)}
+                  />
+                </div>
+
+                <div className="d-flex justify-content-between w-50">
+                  <button
+                    type="button"
+                    className=" popupbtn"
+                    onClick={() => editairportdata()}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    className="popupbtn"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Edit Admin
+
+  const editairportdata = async () => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+
+    const result = await axios.post(
+      "http://143.198.124.185/api/master/insertEditAirport",
+      {
+        uid: 1,
+        id: id,
+        name: name,
+        code: code,
+        terminal: terminal,
+      },
+      {
+        headers: {
+          "content-type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+
+    if (result) {
+      console.log(result);
+      alert("updated");
+      fetchAirportData();
+    } else {
+      alert("error");
+    }
+  };
+
   useEffect(() => {
     fetchAirportData();
     if (!localStorage.getItem("token")) {
@@ -136,7 +256,6 @@ const Airporttable = () => {
             >
               Add Airport details
             </button>
-            {/* <p>Search:</p> <input type="text" className="ms-2"></input> */}
           </div>
           <DataTable
             title="Airport Details"
@@ -146,52 +265,7 @@ const Airporttable = () => {
           />
         </div>
       </div>
-
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="staticBackdropLabel">
-                Add / Edit Airport Details
-              </h5>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <label class="form-label">ID</label>
-                  <input class="form-control" />
-                  <label class="form-label">Name</label>
-                  <input class="form-control" />
-                  <label class="form-label">Code</label>
-                  <input class="form-control" />
-                  <label class="form-label">Terminal</label>
-                  <input class="form-control" />
-                </div>
-                <div className="d-flex justify-content-between w-50">
-                  <button type="submit" class=" popupbtn">
-                    Submit
-                  </button>
-                  <button
-                    type="button"
-                    class="popupbtn"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+      {editairportPopup()}
       <Footer />
     </>
   );
