@@ -98,7 +98,6 @@ const Airporttable = () => {
     const items = localStorage.getItem("token");
     console.log(items);
     let token = "bearer " + items;
-    alert(row.id);
 
     const res = await axios.post(
       `http://143.198.124.185/api/master/deleteAirport`,
@@ -114,7 +113,7 @@ const Airporttable = () => {
     );
     const result = await res.data;
     if (result.st) {
-      window.alert("Airport details has been deleted");
+      window.alert(`Details of ${row.name} has been deleted`);
       fetchAirportData();
     } else {
       alert(result.msg);
@@ -183,6 +182,7 @@ const Airporttable = () => {
                   <button
                     type="button"
                     className=" popupbtn"
+                    data-bs-dismiss="modal"
                     onClick={() => editairportdata()}
                   >
                     Submit

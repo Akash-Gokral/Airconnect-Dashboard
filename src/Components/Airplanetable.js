@@ -97,7 +97,6 @@ const Airplanetable = () => {
     const items = localStorage.getItem("token");
     console.log(items);
     let token = "bearer " + items;
-    alert(row.id);
 
     const res = await axios.post(
       `http://143.198.124.185/api/master/deleteAirplane`,
@@ -113,7 +112,7 @@ const Airplanetable = () => {
     );
     const result = await res.data;
     if (result.st) {
-      window.alert("Airplane details has been deleted");
+      window.alert(`Details of ${row.name} ${row.plane_no} has been deleted`);
       fetchAirplaneData();
     } else {
       alert(result.msg);
@@ -182,6 +181,7 @@ const Airplanetable = () => {
                   <button
                     type="button"
                     className=" popupbtn"
+                    data-bs-dismiss="modal"
                     onClick={() => editairplanedata()}
                   >
                     Submit

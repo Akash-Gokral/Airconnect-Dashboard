@@ -104,7 +104,6 @@ const Admintable = () => {
     const items = localStorage.getItem("token");
     console.log(items);
     let token = "bearer " + items;
-    alert(row.id);
 
     const res = await axios.post(
       `http://143.198.124.185/api/deleteAdmin`,
@@ -120,7 +119,7 @@ const Admintable = () => {
     );
     const result = await res.data;
     if (result.st) {
-      window.alert("User has been deleted");
+      window.alert(`User ${row.name} has been deleted`);
       fetchAdminData();
     } else {
       alert(result.msg);
@@ -194,6 +193,7 @@ const Admintable = () => {
                   <button
                     type="button"
                     className=" popupbtn"
+                    data-bs-dismiss="modal"
                     onClick={() => editadmin()}
                   >
                     Submit
@@ -240,9 +240,8 @@ const Admintable = () => {
       )
      
     if (result) {
-      console.log(result);
+      fetchAdminData();
      alert("Details has been updated");
-     fetchAdminData();
     } else {
       alert("error");
     }
