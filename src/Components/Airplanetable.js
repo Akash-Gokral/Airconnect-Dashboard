@@ -228,7 +228,7 @@ const Airplanetable = () => {
 
     if (result) {
       console.log(result);
-      alert("updated");
+      alert("Details has been updated");
       fetchAirplaneData();
     } else {
       alert("error");

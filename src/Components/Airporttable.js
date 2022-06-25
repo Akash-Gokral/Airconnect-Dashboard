@@ -229,7 +229,7 @@ const Airporttable = () => {
 
     if (result) {
       console.log(result);
-      alert("updated");
+      alert("Details has been updated");
       fetchAirportData();
     } else {
       alert("error");

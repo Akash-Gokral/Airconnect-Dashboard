@@ -241,9 +241,8 @@ const Admintable = () => {
      
     if (result) {
       console.log(result);
-     alert("updated");
+     alert("Details has been updated");
      fetchAdminData();
-      // editadminPopup();
     } else {
       alert("error");
     }
@@ -268,8 +267,6 @@ const Admintable = () => {
             >
               Add Admin
             </button>
-            {/* <p className="ms-5">Search:</p>
-            <input type="text" className="ms-2"></input> */}
           </div>
           <DataTable
             title="Admin Details"
