@@ -1,15 +1,7 @@
-.admintable_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: auto !important;
-  padding: 50px 350px !important;
-  margin-top: 25px !important;
-}
-.admintable {
-  width: 100% !important;
-  height: 100% !important;
+
+.admintable{
+  margin: 68px 0px;
+ padding: 10px 250px;
 }
 .edit_delete_btn {
   padding: 5px 15px;
@@ -25,17 +17,18 @@
   border: none;
   border-radius: 6px;
 }
+.dashboard{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+}
 .inputs {
   justify-content: flex-end !important;
 }
 
-.div {
-  height: 90vh !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 .inputs p {
   width: 65px !important;
 }
@@ -68,4 +61,29 @@ input:focus {
   border: none;
   text-decoration: underline;
   margin: 0 3px;
+}
+body{
+  position: relative;
+}
+.main-footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+@media screen and (max-width:760px){
+.admintable{
+  padding: 0 !important;
+}
+html {
+  position: relative;
+}
+.main-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.dashboard{
+  height: 100vh;
+}
 }

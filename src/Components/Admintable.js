@@ -323,9 +323,11 @@ const Admintable = () => {
   }, [page, perPage]);
   return (
     <>
-      <NavBar />
-      <Sidebar/>
-      <div className="col-12 admintable_container">
+      <div className="container-fluid">
+        <div className="row">
+        <NavBar />
+        <Sidebar/>
+        <div className="col-12">
         <div className="admintable">
           <div className="d-flex inputs  p-2 ">
             <button
@@ -344,6 +346,8 @@ const Admintable = () => {
             pagination
           />
         </div>
+        </div>
+        </div>   
       </div>
 
       {editadminPopup()}

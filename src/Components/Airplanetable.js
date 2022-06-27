@@ -262,9 +262,11 @@ const Airplanetable = () => {
 
   return (
     <>
+      <div className="container-fluid">
+        <div className="row">
       <NavBar />
       <Sidebar/>
-      <div className="admintable_container">
+      <div className="col-12">
         <div className="admintable">
           <div className="d-flex inputs p-2 ">
             <button
@@ -283,6 +285,8 @@ const Airplanetable = () => {
             pagination
           />
         </div>
+      </div>
+      </div>
       </div>
       {editairplanePopup()}
 

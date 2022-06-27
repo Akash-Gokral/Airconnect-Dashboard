@@ -1,28 +1,27 @@
-import React, { useEffect } from 'react'
-import "./styles/maincontent.css"
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect } from "react";
+import "./styles/maincontent.css";
+import { useNavigate } from "react-router-dom";
 
 const MainContent = () => {
+  const navigate = useNavigate();
 
-    const navigate=useNavigate();
-
-    
-    useEffect(()=>{
-    if(!localStorage.getItem("token")){
-        navigate("/signin")
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/signin");
     }
-    
-},[])
-
-
+  }, []);
 
   return (
     <>
-             <div className="div">
-             <h2 className="maincontent_heading"> Welcome To Dashboard</h2>
-             </div>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="dashboard"> 
+            <h2>Welcome To Dashboard</h2>
+            </div>
+        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default MainContent
+export default MainContent;
