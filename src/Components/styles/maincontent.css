@@ -1,78 +1,71 @@
-
-
-.admintable_container{
-    height: 90vh !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction:column;
-    overflow: auto !important;
-    padding: 50px 350px !important;
-    margin-top: 25px !important;
-    width: 100% !important;
+.admintable_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: auto !important;
+  padding: 50px 350px !important;
+  margin-top: 25px !important;
 }
-.edit_delete_btn{
-    padding: 5px 15px;
-    border: none;
-    background: transparent;
-    background: #3F6DB8;
-    color: #fff;
-    border-radius: 5px;
+.admintable {
+  width: 100% !important;
+  height: 100% !important;
 }
-.signoutbtn{
-    padding: 5px 15px;
-    background:#3F6DB8;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
+.edit_delete_btn {
+  padding: 5px 15px;
+  border: none;
+  background: #3f6db8;
+  color: #fff;
+  border-radius: 6px;
 }
-
-.inputs{
-    justify-content: flex-end !important;
+.signoutbtn {
+  padding: 5px 15px;
+  background: #3f6db8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
 }
 
-.div{
-    height: 90vh !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.inputs {
+  justify-content: flex-end !important;
+}
+
+.div {
+  height: 90vh !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .inputs p {
-    width: 65px !important;
+  width: 65px !important;
 }
 
-.inputs input, select {
-    border: 1px solid black;
-    border-radius: 8px !important;
-    padding: 5px 10px !important;
+.inputs input,
+select {
+  border: 1px solid black;
+  border-radius: 8px !important;
+  padding: 5px 10px !important;
 }
 
 input:focus {
-    outline: none !important;
-
+  outline: none !important;
 }
- 
-
 
 .btn {
-    width: 130px !important;
-    margin: 30px 130px;
-    border: 1px solid #000 !important;
-    margin-bottom: 0 !important;
+  width: 130px !important;
+  margin: 30px 130px;
+  border: 1px solid #000 !important;
+  margin-bottom: 0 !important;
 }
 
-
-
 .search_div {
-    display: flex !important;
-    justify-content: end;
+  display: flex !important;
+  justify-content: end;
 }
 
 .edit_delete_btn button {
-    background: transparent;
-    border: none;
-    text-decoration: underline;
-    margin: 0 3px;
+  background: transparent;
+  border: none;
+  text-decoration: underline;
+  margin: 0 3px;
 }
-
-    

@@ -1,16 +1,33 @@
-.sign-in-btn{
-  background:#3F6DB8;
-  color: #fff;
-
+.signin_div {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-direction: column !important;
 }
-.theme-color{
-  color: #3F6DB8;
+
+.signin_btn {
+  padding: 5px 15px;
+  background: #3f6db8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+}
+
+.theme-color {
+  color: #3f6db8;
   font-weight: 600;
 }
 
-.sign-in-btn:hover{
-    color: black !important;
+.sign-in-btn:hover {
+  color: black !important;
 }
-.signin_text{
-  margin-right: 15px;
+
+body {
+  position: relative;
+  height: 98vh !important;
+}
+.main-footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
 }

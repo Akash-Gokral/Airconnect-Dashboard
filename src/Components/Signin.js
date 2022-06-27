@@ -66,7 +66,7 @@ const navigate = useNavigate();
 									<input className="form-control" value={password} placeholder="Enter your password" type="password"
 									 onChange={(e)=>{setPassword(e.target.value)}}/>
 								</div>
-								<Link to="/"><a className="btn ripple sign-in-btn btn-block" onClick={submit}>Sign In</a></Link>
+							<div className='signin_div'><button className="btn signin_btn" onClick={submit}>Sign In</button>	</div>
 							</form>
 							<div className="mt-3 text-center">
 								<p className="mb-1"><Link to="/signin/password">Forgot password?</Link></p>

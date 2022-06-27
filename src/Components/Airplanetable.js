@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import Sidebar from "./Sidebar";
 
 const Airplanetable = () => {
   const [data, setData] = useState([]);
@@ -63,62 +64,7 @@ const Airplanetable = () => {
     },
   ];
 
-  const fetchAirplaneData = async () => {
-    const items = localStorage.getItem("token");
-    console.log(items);
-    let token = "bearer " + items;
-    await axios
-      .post(
-        `http://143.198.124.185/api/master/airplaneList`,
-        {
-          page: page,
-          per_page: perPage,
-          search_term: "",
-        },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-      .then(function (res) {
-        setData(res.data.data);
-        console.log(res);
-      })
-      .catch(function (err) {
-        localStorage.removeItem("token");
-        window.location.reload();
-      });
-  };
-
-  // Delete airplane
-
-  const deleteairplane = async (row) => {
-    const items = localStorage.getItem("token");
-    console.log(items);
-    let token = "bearer " + items;
-
-    const res = await axios.post(
-      `http://143.198.124.185/api/master/deleteAirplane`,
-      {
-        uid: 1,
-        id: row.id,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-    const result = await res.data;
-    if (result.st) {
-      window.alert(`Details of ${row.name} ${row.plane_no} has been deleted`);
-      fetchAirplaneData();
-    } else {
-      alert(result.msg);
-    }
-  };
-
+  
   const editairplane = (row) => {
     editairplanePopup();
     setName(row.name);
@@ -215,6 +161,63 @@ const Airplanetable = () => {
     );
   };
 
+  const fetchAirplaneData = async () => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+    await axios
+      .post(
+        `http://143.198.124.185/api/master/airplaneList`,
+        {
+          page: page,
+          per_page: perPage,
+          search_term: "",
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then(function (res) {
+        setData(res.data.data);
+        console.log(res);
+      })
+      .catch(function (err) {
+        localStorage.removeItem("token");
+        window.location.reload();
+      });
+  };
+
+  // Delete airplane
+
+  const deleteairplane = async (row) => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+
+    const res = await axios.post(
+      `http://143.198.124.185/api/master/deleteAirplane`,
+      {
+        uid: 1,
+        id: row.id,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.data;
+    if (result.st) {
+      window.alert(`Details of ${row.name} ${row.plane_no} has been deleted`);
+      fetchAirplaneData();
+    } else {
+      alert(result.msg);
+    }
+  };
+
+
   // Edit Airplane
 
   const editairplanedata = async () => {
@@ -260,6 +263,7 @@ const Airplanetable = () => {
   return (
     <>
       <NavBar />
+      <Sidebar/>
       <div className="admintable_container">
         <div className="admintable">
           <div className="d-flex inputs p-2 ">

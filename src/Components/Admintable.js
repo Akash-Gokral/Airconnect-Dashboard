@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
+import Sidebar from "./Sidebar";
 
 const Admintable = () => {
   const [data, setData] = useState([]);
@@ -323,6 +324,7 @@ const Admintable = () => {
   return (
     <>
       <NavBar />
+      <Sidebar/>
       <div className="col-12 admintable_container">
         <div className="admintable">
           <div className="d-flex inputs  p-2 ">

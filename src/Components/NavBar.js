@@ -1,100 +1,90 @@
-import React from 'react'
-import {Link,useNavigate } from 'react-router-dom'
-import airconnect from "../Assets/Airconnect Logo 1.png"
+import React from "react";
+import {useNavigate } from "react-router-dom";
+
 
 const NavBar = () => {
+  const navigate = useNavigate();
 
-	const navigate=useNavigate();
-
-const signout =()=>{
-	localStorage.removeItem("token")
-	navigate("/signin")
-}
+  const signout = () => {
+    localStorage.removeItem("token");
+    navigate("/signin");
+  };
 
   return (
     <>
-           <div className="main-header side-header sticky">
-			<div className="container-fluid main-container">
-				<div className="main-header-left sidemenu ">
-					<a className="main-header-menu-icon" href="" id="mainSidebarToggle"><span></span></a>
-				</div>
-			
-				<div className="main-header-right">
-			<button onClick={signout} className="signoutbtn ">Signout<i className="icon icon-share-alt ps-2"></i></button>
-					<button className="navbar-toggler navresponsive-toggler d-lg-none ms-auto collapsed" type="button"
-						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
-						aria-controls="navbarSupportedContent-4" aria-expanded="false"
-						aria-label="Toggle navigation"> <span
-							className="navbar-toggler-icon fe fe-more-vertical "></span>
-					</button>
-					<div className="navbar navbar-expand-lg navbar-collapse responsive-navbar p-0">
-						<div className="collapse navbar-collapse" id="navbarSupportedContent-4">
-							<ul className="nav nav-item header-icons navbar-nav-right ms-auto">
-							
-								<div className="dropdown  d-flex">
-									<a className="nav-link icon theme-layout nav-link-bg layout-setting">
-										<span className="dark-layout"><i className="fe fe-moon"></i></span>
-										<span className="light-layout"><i className="fe fe-sun"></i></span>
-									</a>
-								</div>
-						
-								<li className="dropdown header-search">
-									<a className="nav-link icon header-search">
-										<i className="fe fe-search"></i>
-									</a>
-									<div className="dropdown-menu">
-										<div className="main-form-search p-2">
-											<input className="form-control" placeholder="Search" type="search"/>
-											<button className="btn"><i className="fe fe-search"></i></button>
-										</div>
-									</div>
-								</li>
-								<li className="dropdown">
-									<a className="nav-link icon full-screen-link">
-										<i className="fe fe-maximize fullscreen-button"></i>
-									</a>
-								</li>
-						
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div className="main-header side-header sticky">
+        <div className="container-fluid main-container">
+          <div className="main-header-left sidemenu ">
+            <a className="main-header-menu-icon" href="" id="mainSidebarToggle">
+              <span></span>
+            </a>
+          </div>
+
+          <div className="main-header-right">
+            <button onClick={signout} className="signoutbtn ">
+              Signout<i className="icon icon-share-alt ps-2"></i>
+            </button>
+            <button
+              className="navbar-toggler navresponsive-toggler d-lg-none ms-auto collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent-4"
+              aria-controls="navbarSupportedContent-4"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              {" "}
+              <span className="navbar-toggler-icon fe fe-more-vertical "></span>
+            </button>
+            <div className="navbar navbar-expand-lg navbar-collapse responsive-navbar p-0">
+              <div
+                className="collapse navbar-collapse"
+                id="navbarSupportedContent-4"
+              >
+                <ul className="nav nav-item header-icons navbar-nav-right ms-auto">
+                  <div className="dropdown  d-flex">
+                    <a className="nav-link icon theme-layout nav-link-bg layout-setting">
+                      <span className="dark-layout">
+                        <i className="fe fe-moon"></i>
+                      </span>
+                      <span className="light-layout">
+                        <i className="fe fe-sun"></i>
+                      </span>
+                    </a>
+                  </div>
+
+                  <li className="dropdown header-search">
+                    <a className="nav-link icon header-search">
+                      <i className="fe fe-search"></i>
+                    </a>
+                    <div className="dropdown-menu">
+                      <div className="main-form-search p-2">
+                        <input
+                          className="form-control"
+                          placeholder="Search"
+                          type="search"
+                        />
+                        <button className="btn">
+                          <i className="fe fe-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                  <li className="dropdown">
+                    <a className="nav-link icon full-screen-link">
+                      <i className="fe fe-maximize fullscreen-button"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
-		<div className="main-sidebar main-sidemenu main-sidebar-sticky side-menu">
-		<Link to="/home"><img src={airconnect} /></Link>
-			<div className="main-sidebar-body">
-				<ul className="nav  hor-menu">
-					<li className="nav-label">Users</li>
-					<li className="nav-item">
-					<Link to="/home">	<a className="nav-link"><i className="fe fe-airplay"></i><span
-								className="sidemenu-label">Dashboard</span></a></Link>
-					</li>
-					<li className="nav-item">
-					<Link to="/admintable">	<a className="nav-link"><i class="icon icon-people"></i><span
-								className="sidemenu-label">Admins</span></a></Link>
-					</li>
-				
-					<li className="nav-label">Masters</li>
-					<li className="nav-item">
-					<Link to="/airporttable">	<a className="nav-link with-sub" href=""><i className="fe fe-box"></i><span
-								className="sidemenu-label">Airport</span></a></Link>
-				
-					</li>
-					<li className="nav-item">
-					<Link to="/airplanetable">	<a className="nav-link with-sub" href=""><i class="icon icon-plane"></i>
-							<span className="sidemenu-label">Airplane</span></a></Link>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-
-    
     </>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

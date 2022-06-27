@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import Sidebar from "./Sidebar";
 
 const Airporttable = () => {
   const [data, setData] = useState([]);
@@ -62,63 +63,6 @@ const Airporttable = () => {
       sortable: true,
     },
   ];
-
-  const fetchAirportData = async () => {
-    const items = localStorage.getItem("token");
-    console.log(items);
-    let token = "bearer " + items;
-
-    await axios
-      .post(
-        `http://143.198.124.185/api/master/airportList`,
-        {
-          page: page,
-          per_page: perPage,
-          search_term: "",
-        },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-      .then(function (res) {
-        setData(res.data.data);
-        console.log(res);
-      })
-      .catch(function (err) {
-        localStorage.removeItem("token");
-        window.location.reload();
-      });
-  };
-
-  // Delete Admin
-
-  const deleteairport = async (row) => {
-    const items = localStorage.getItem("token");
-    console.log(items);
-    let token = "bearer " + items;
-
-    const res = await axios.post(
-      `http://143.198.124.185/api/master/deleteAirport`,
-      {
-        uid: 1,
-        id: row.id,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-    const result = await res.data;
-    if (result.st) {
-      window.alert(`Details of ${row.name} has been deleted`);
-      fetchAirportData();
-    } else {
-      alert(result.msg);
-    }
-  };
 
   const editairport = (row) => {
     editairportPopup();
@@ -217,6 +161,65 @@ const Airporttable = () => {
     );
   };
 
+
+  const fetchAirportData = async () => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+
+    await axios
+      .post(
+        `http://143.198.124.185/api/master/airportList`,
+        {
+          page: page,
+          per_page: perPage,
+          search_term: "",
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then(function (res) {
+        setData(res.data.data);
+        console.log(res);
+      })
+      .catch(function (err) {
+        localStorage.removeItem("token");
+        window.location.reload();
+      });
+  };
+
+  // Delete Admin
+
+  const deleteairport = async (row) => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+
+    const res = await axios.post(
+      `http://143.198.124.185/api/master/deleteAirport`,
+      {
+        uid: 1,
+        id: row.id,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.data;
+    if (result.st) {
+      window.alert(`Details of ${row.name} has been deleted`);
+      fetchAirportData();
+    } else {
+      alert(result.msg);
+    }
+  };
+
+  
   // Edit Admin
 
   const editairportdata = async () => {
@@ -261,6 +264,7 @@ const Airporttable = () => {
   return (
     <>
       <NavBar />
+      <Sidebar/>
       <div className="admintable_container">
         <div className="admintable">
           <div className="d-flex inputs p-2 ">
