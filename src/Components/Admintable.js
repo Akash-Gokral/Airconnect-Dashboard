@@ -336,7 +336,7 @@ const Admintable = () => {
               data-bs-target="#staticBackdrop"
               onClick={addAdmin}
             >
-              <i class="fa fa-user-plus pe-2"></i> Add Admins
+              <i class="fa fa-user-plus pe-2"></i> Add Admin
             </button>
           </div>
           <DataTable
