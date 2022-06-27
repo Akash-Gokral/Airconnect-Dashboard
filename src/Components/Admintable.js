@@ -7,13 +7,14 @@ import NavBar from "./NavBar";
 
 const Admintable = () => {
   const [data, setData] = useState([]);
-  const [page,] = useState();
+  const [page] = useState();
   const [perPage] = useState();
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [id, setId] = useState();
   const [mobile, setMobile] = useState();
   const [password, setPassword] = useState();
+  const [block,setBlock] = useState('Active')
 
   const navigate = useNavigate();
 
@@ -39,10 +40,17 @@ const Admintable = () => {
       sortable: true,
     },
     {
-      name: "isBlock",
-      selector: (row) => row.isblock,
+      name: "Block",
+      selector: (row) => (<button className="edit_delete_btn" onClick={() => blockadmin(row)}>
+     <i class="fa fa-user-times"></i>
+    </button> ), 
       sortable: true,
     },
+    {
+      name: "Status",
+      selector: (row) => row.isblock, 
+      sortable: true,
+    },  
     {
       name: "Edit Admin",
       selector: (row) => (
@@ -52,7 +60,7 @@ const Admintable = () => {
           data-bs-target="#staticBackdrop"
           onClick={() => editPop(row)}
         >
-        <i class="fa fa-pencil-square-o"></i>
+          <i class="fa fa-pencil-square-o"></i>
         </button>
       ),
       sortable: true,
@@ -61,71 +69,14 @@ const Admintable = () => {
       name: "Delete Admin",
       selector: (row) => (
         <button className="edit_delete_btn" onClick={() => deleteadmin(row)}>
-         <i class="fa fa-trash"></i>
+          <i class="fa fa-trash"></i>
         </button>
       ),
       sortable: true,
     },
   ];
 
-  // Get Admin user
-  const fetchAdminData = async () => {
-    const items = localStorage.getItem("token");
-    console.log(items);
-    let token = "bearer " + items;
-
-    await axios
-      .post(
-        `http://143.198.124.185/api/getAdminList`,
-        {
-          page: page,
-          per_page: perPage,
-          search_term: "",
-        },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-      .then(function (res) {
-        setData(res.data.data);
-        console.log(res);
-      })
-      .catch(function (err) {
-        localStorage.removeItem("token");
-        window.location.reload();
-      });
-  };
-
-  // Delete Admin
-
-  const deleteadmin = async (row) => {
-    const items = localStorage.getItem("token");
-    console.log(items);
-    let token = "bearer " + items;
-
-    const res = await axios.post(
-      `http://143.198.124.185/api/deleteAdmin`,
-      {
-        uid: 1,
-        id: row.id,
-      },
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-    const result = await res.data;
-    if (result.st) {
-      window.alert(`User ${row.name} has been deleted`);
-      fetchAdminData();
-    } else {
-      alert(result.msg);
-    }
-  };
-
+  
   const editPop = (row) => {
     editadminPopup();
     setEmail(row.email);
@@ -198,7 +149,7 @@ const Admintable = () => {
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
                   />
-                   <label className="form-label">Password</label>
+                  <label className="form-label">Password</label>
                   <input
                     type="password"
                     required
@@ -233,6 +184,65 @@ const Admintable = () => {
     );
   };
 
+
+  // Get Admin user
+  const fetchAdminData = async () => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+
+    await axios
+      .post(
+        `http://143.198.124.185/api/getAdminList`,
+        {
+          page: page,
+          per_page: perPage,
+          search_term: "",
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then(function (res) {
+        setData(res.data.data);
+        console.log(res);
+      })
+      .catch(function (err) {
+        localStorage.removeItem("token");
+        window.location.reload();
+      });
+  };
+
+  // Delete Admin
+
+  const deleteadmin = async (row) => {
+    const items = localStorage.getItem("token");
+    console.log(items);
+    let token = "bearer " + items;
+
+    const res = await axios.post(
+      `http://143.198.124.185/api/deleteAdmin`,
+      {
+        uid: 1,
+        id: row.id,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.data;
+    if (result.st) {
+      window.alert(`User ${row.name} has been deleted`);
+      fetchAdminData();
+    } else {
+      alert(result.msg);
+    }
+  };
+
   // Edit Admin
 
   const editadmin = async () => {
@@ -259,14 +269,49 @@ const Admintable = () => {
     );
 
     if (result) {
+      fetchAdminData();
+
+      if (id === null) {
         fetchAdminData();
+        alert(result.data.msg);
+      }
+      else{
         alert(result.data.msg)
-        
-        if(id===null){
-          fetchAdminData();
+      }
+    }
+  };
+
+  // Block Admin
+
+  const blockadmin = async (row) => {
+    const items = localStorage.getItem("token");
+    let token = "bearer " + items;
+
+    const result = await axios.post(
+      "http://143.198.124.185/api/blockAdmin",
+      {
+        uid: 1,
+        id: row.id,
+      },
+      {
+        headers: {
+          "content-type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+      if(result){
+        console.log(result);
+        if(result.data.st == true){
+        alert(`User ${row.name} has been Blocked`)
+        fetchAdminData();
+        }
+        else{
           alert(result.data.msg)
         }
-    } 
+      }
+
+    
   };
 
   useEffect(() => {
@@ -278,7 +323,7 @@ const Admintable = () => {
   return (
     <>
       <NavBar />
-      <div className="admintable_container">
+      <div className="col-12 admintable_container">
         <div className="admintable">
           <div className="d-flex inputs  p-2 ">
             <button
@@ -287,7 +332,7 @@ const Admintable = () => {
               data-bs-target="#staticBackdrop"
               onClick={addAdmin}
             >
-              <i class="fa fa-user-plus pe-2"></i>  Add Admin
+              <i class="fa fa-user-plus pe-2"></i> Add Admin
             </button>
           </div>
           <DataTable

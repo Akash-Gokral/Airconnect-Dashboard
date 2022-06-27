@@ -6,10 +6,10 @@
     justify-content: center;
     align-items: center;
     flex-direction:column;
-}
-.admintable{
-   width: 65% !important;
-   margin-top: 60px;
+    overflow: auto !important;
+    padding: 50px 350px !important;
+    margin-top: 25px !important;
+    width: 100% !important;
 }
 .edit_delete_btn{
     padding: 5px 15px;
@@ -31,14 +31,12 @@
     justify-content: flex-end !important;
 }
 
-.maincontent_heading{
-    height: 90vh;
+.div{
+    height: 90vh !important;
     display: flex;
     justify-content: center;
     align-items: center;
-
-}
-
+  }
 .inputs p {
     width: 65px !important;
 }
