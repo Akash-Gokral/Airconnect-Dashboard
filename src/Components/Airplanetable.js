@@ -8,11 +8,11 @@ import { useState } from "react";
 
 const Airplanetable = () => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState();
-  const [perPage, setPerPage] = useState();
+  const [page] = useState();
+  const [perPage] = useState();
   const [id, setId] = useState();
   const [name, setName] = useState();
-  const [plane, setPlane] = useState();
+  const [plane_no, setPlane_No] = useState();
   const [capacity, setCapacity] = useState();
 
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ const Airplanetable = () => {
       });
   };
 
-  // Delete Admin
+  // Delete airplane
 
   const deleteairplane = async (row) => {
     const items = localStorage.getItem("token");
@@ -123,7 +123,7 @@ const Airplanetable = () => {
     editairplanePopup();
     setName(row.name);
     setId(row.id);
-    setPlane(row.plane_no);
+    setPlane_No(row.plane_no);
     setCapacity(row.capacity);
   };
 
@@ -132,7 +132,7 @@ const Airplanetable = () => {
     editairplanePopup();
     setName("");
     setId("");
-    setPlane("");
+    setPlane_No("");
     setCapacity("");
   };
 
@@ -169,19 +169,23 @@ const Airplanetable = () => {
                     type="text"
                     className="form-control"
                     value={name}
+                    required
                     onChange={(e) => setName(e.target.value)}
                   />
                   <label className="form-label">Plane no</label>
                   <input
                     className="form-control"
-                    value={plane}
-                    onChange={(e) => setPlane(e.target.value)}
+                    type="number"
+                    value={plane_no}
+                    required
+                    onChange={(e) => setPlane_No(e.target.value)}
                   />
                   <label className="form-label">Capacity</label>
                   <input
                     type="number"
                     className="form-control"
                     value={capacity}
+                    required
                     onChange={(e) => setCapacity(e.target.value)}
                   />
                 </div>
@@ -211,7 +215,7 @@ const Airplanetable = () => {
     );
   };
 
-  // Edit Admin
+  // Edit Airplane
 
   const editairplanedata = async () => {
     const items = localStorage.getItem("token");
@@ -224,7 +228,7 @@ const Airplanetable = () => {
         uid: 1,
         id: id,
         name: name,
-        plane: plane,
+        plane_no: plane_no,
         capacity: capacity,
       },
       {
@@ -249,8 +253,7 @@ const Airplanetable = () => {
   useEffect(() => {
     fetchAirplaneData();
     if (!localStorage.getItem("token")) {
-      navigate("/signin");
-      
+      navigate("/signin"); 
     }
   }, [page, perPage]);
 

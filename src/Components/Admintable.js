@@ -7,7 +7,6 @@ import NavBar from "./NavBar";
 
 const Admintable = () => {
   const [data, setData] = useState([]);
-  const [search] = useState();
   const [page,] = useState();
   const [perPage] = useState();
   const [email, setEmail] = useState();
@@ -275,7 +274,7 @@ const Admintable = () => {
     if (!localStorage.getItem("token")) {
       navigate("/signin");
     }
-  }, [search, page, perPage]);
+  }, [page, perPage]);
   return (
     <>
       <NavBar />

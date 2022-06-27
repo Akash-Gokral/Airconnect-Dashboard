@@ -8,8 +8,8 @@ import { useState } from "react";
 
 const Airporttable = () => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState();
-  const [perPage, setPerPage] = useState();
+  const [page] = useState();
+  const [perPage] = useState();
   const [id, setId] = useState();
   const [name, setName] = useState();
   const [code, setCode] = useState();
@@ -170,12 +170,15 @@ const Airporttable = () => {
                   <input
                     type="text"
                     className="form-control"
+                    required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                   <label className="form-label">Code</label>
                   <input
                     className="form-control"
+                    type="number"
+                    required
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
                   />
@@ -183,6 +186,7 @@ const Airporttable = () => {
                   <input
                     type="number"
                     className="form-control"
+                    required
                     value={terminal}
                     onChange={(e) => setTerminal(e.target.value)}
                   />
