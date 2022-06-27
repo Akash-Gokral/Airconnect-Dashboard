@@ -73,7 +73,7 @@ const signout =()=>{
 								className="sidemenu-label">Dashboard</span></a></Link>
 					</li>
 					<li className="nav-item">
-					<Link to="/admintable">	<a className="nav-link"><i className="fe fe-airplay"></i><span
+					<Link to="/admintable">	<a className="nav-link"><i class="icon icon-people"></i><span
 								className="sidemenu-label">Admins</span></a></Link>
 					</li>
 				
@@ -84,7 +84,7 @@ const signout =()=>{
 				
 					</li>
 					<li className="nav-item">
-					<Link to="/airplanetable">		<a className="nav-link with-sub" href=""><i className="fe fe-award"></i>
+					<Link to="/airplanetable">	<a className="nav-link with-sub" href=""><i class="icon icon-plane"></i>
 							<span className="sidemenu-label">Airplane</span></a></Link>
 					</li>
 				</ul>
