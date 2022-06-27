@@ -18,9 +18,9 @@ const signout =()=>{
 				<div className="main-header-left sidemenu ">
 					<a className="main-header-menu-icon" href="" id="mainSidebarToggle"><span></span></a>
 				</div>
-				<Link to="/home"><img src={airconnect} /></Link>
+			
 				<div className="main-header-right">
-			<button onClick={signout} className="signoutbtn">Signout</button>
+			<button onClick={signout} className="signoutbtn ">Signout<i className="icon icon-share-alt ps-2"></i></button>
 					<button className="navbar-toggler navresponsive-toggler d-lg-none ms-auto collapsed" type="button"
 						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
 						aria-controls="navbarSupportedContent-4" aria-expanded="false"

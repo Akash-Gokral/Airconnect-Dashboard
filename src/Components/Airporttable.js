@@ -47,7 +47,7 @@ const Airporttable = () => {
           data-bs-target="#staticBackdrop"
           onClick={() => editairport(row)}
         >
-          Edit
+            <i class="fa fa-pencil-square-o"></i>
         </button>
       ),
       sortable: true,
@@ -56,7 +56,7 @@ const Airporttable = () => {
       name: "Delete Admin",
       selector: (row) => (
         <button className="edit_delete_btn" onClick={() => deleteairport(row)}>
-          Delete
+           <i class="fa fa-trash"></i>
         </button>
       ),
       sortable: true,
@@ -128,12 +128,22 @@ const Airporttable = () => {
     setTerminal(row.terminal);
   };
 
+  const addAirport = (row) => {
+    editairportPopup();
+    setCode("");
+    setName("");
+    setId("");
+    setTerminal("");
+
+  }; 
+
+
   const editairportPopup = () => {
     return (
       <div
         className="modal fade"
         id="staticBackdrop"
-        data-bs-backdrop="static"
+        data-bs-backdrop="true"
         data-bs-keyboard="false"
         tabindex="-1"
         aria-labelledby="staticBackdropLabel"
@@ -181,7 +191,7 @@ const Airporttable = () => {
                 <div className="d-flex justify-content-between w-50">
                   <button
                     type="button"
-                    className=" popupbtn"
+                    className=" signoutbtn"
                     data-bs-dismiss="modal"
                     onClick={() => editairportdata()}
                   >
@@ -189,7 +199,7 @@ const Airporttable = () => {
                   </button>
                   <button
                     type="button"
-                    className="popupbtn"
+                    className="signoutbtn"
                     data-bs-dismiss="modal"
                   >
                     Close
@@ -228,12 +238,13 @@ const Airporttable = () => {
     );
 
     if (result) {
-      console.log(result);
-      alert("Details has been updated");
       fetchAirportData();
-    } else {
-      alert("error");
+      alert(result.data.msg); 
+      if(id===null){
+      fetchAirportData();
+      alert(result.data.msg)
     }
+  }
   };
 
   useEffect(() => {
@@ -250,11 +261,12 @@ const Airporttable = () => {
         <div className="admintable">
           <div className="d-flex inputs p-2 ">
             <button
-              className="popupbtn"
+              className="signoutbtn"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
+              onClick={addAirport}
             >
-              Add Airport details
+               <i class="fa fa-user-plus pe-2"></i>  Add Airport details
             </button>
           </div>
           <DataTable

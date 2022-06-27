@@ -7,13 +7,14 @@ import NavBar from "./NavBar";
 
 const Admintable = () => {
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState();
-  const [perPage, setPerPage] = useState();
+  const [search] = useState();
+  const [page,] = useState();
+  const [perPage] = useState();
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [id, setId] = useState();
   const [mobile, setMobile] = useState();
+  const [password, setPassword] = useState();
 
   const navigate = useNavigate();
 
@@ -52,7 +53,7 @@ const Admintable = () => {
           data-bs-target="#staticBackdrop"
           onClick={() => editPop(row)}
         >
-          Edit
+        <i class="fa fa-pencil-square-o"></i>
         </button>
       ),
       sortable: true,
@@ -61,7 +62,7 @@ const Admintable = () => {
       name: "Delete Admin",
       selector: (row) => (
         <button className="edit_delete_btn" onClick={() => deleteadmin(row)}>
-          Delete
+         <i class="fa fa-trash"></i>
         </button>
       ),
       sortable: true,
@@ -134,12 +135,20 @@ const Admintable = () => {
     setMobile(row.mobile);
   };
 
+  const addAdmin = () => {
+    editadminPopup();
+    setEmail("");
+    setName("");
+    setId("");
+    setMobile("");
+  };
+
   const editadminPopup = () => {
     return (
       <div
         className="modal fade"
         id="staticBackdrop"
-        data-bs-backdrop="static"
+        data-bs-backdrop="true"
         data-bs-keyboard="false"
         tabindex="-1"
         aria-labelledby="staticBackdropLabel"
@@ -165,6 +174,7 @@ const Admintable = () => {
                   <label className="form-label">Name</label>
                   <input
                     type="text"
+                    required
                     className="form-control"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -174,6 +184,7 @@ const Admintable = () => {
                   </label>
                   <input
                     type="email"
+                    required
                     className="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
@@ -183,16 +194,25 @@ const Admintable = () => {
                   <label className="form-label">Mobile</label>
                   <input
                     type="number"
+                    required
                     className="form-control"
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
+                  />
+                   <label className="form-label">Password</label>
+                  <input
+                    type="password"
+                    required
+                    className="form-control"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
                 <div className="d-flex justify-content-between w-50">
                   <button
                     type="button"
-                    className=" popupbtn"
+                    className=" signoutbtn"
                     data-bs-dismiss="modal"
                     onClick={() => editadmin()}
                   >
@@ -200,7 +220,7 @@ const Admintable = () => {
                   </button>
                   <button
                     type="button"
-                    className="popupbtn"
+                    className="signoutbtn"
                     data-bs-dismiss="modal"
                   >
                     Close
@@ -222,29 +242,32 @@ const Admintable = () => {
     let token = "bearer " + items;
 
     const result = await axios.post(
-        "http://143.198.124.185/api/insertEditAdmin",
-        {
-          uid: 1,
-          id: id,
-          name: name,
-          email: email,
-          mobile: mobile,
-          password:""
+      "http://143.198.124.185/api/insertEditAdmin",
+      {
+        uid: 1,
+        id: id,
+        name: name,
+        email: email,
+        mobile: mobile,
+        password: password,
+      },
+      {
+        headers: {
+          "content-type": "application/json",
+          Authorization: token,
         },
-        {
-          headers: {
-            "content-type": "application/json",
-            Authorization:token,
-          },
-        }
-      )
-     
+      }
+    );
+
     if (result) {
-      fetchAdminData();
-     alert("Details has been updated");
-    } else {
-      alert("error");
-    }
+        fetchAdminData();
+        alert(result.data.msg)
+        
+        if(id===null){
+          fetchAdminData();
+          alert(result.data.msg)
+        }
+    } 
   };
 
   useEffect(() => {
@@ -260,11 +283,12 @@ const Admintable = () => {
         <div className="admintable">
           <div className="d-flex inputs  p-2 ">
             <button
-              className="popupbtn"
+              className="signoutbtn"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
+              onClick={addAdmin}
             >
-              Add Admin
+              <i class="fa fa-user-plus pe-2"></i>  Add Admin
             </button>
           </div>
           <DataTable

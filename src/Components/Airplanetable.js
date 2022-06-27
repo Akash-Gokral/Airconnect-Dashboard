@@ -47,7 +47,7 @@ const Airplanetable = () => {
           data-bs-target="#staticBackdrop"
           onClick={() => editairplane(row)}
         >
-          Edit
+            <i class="fa fa-pencil-square-o"></i>
         </button>
       ),
       sortable: true,
@@ -56,7 +56,7 @@ const Airplanetable = () => {
       name: "Delete Airplane Details",
       selector: (row) => (
         <button className="edit_delete_btn" onClick={() => deleteairplane(row)}>
-          Delete
+           <i class="fa fa-trash"></i>
         </button>
       ),
       sortable: true,
@@ -127,12 +127,21 @@ const Airplanetable = () => {
     setCapacity(row.capacity);
   };
 
+  
+  const addAirplane = () => {
+    editairplanePopup();
+    setName("");
+    setId("");
+    setPlane("");
+    setCapacity("");
+  };
+
   const editairplanePopup = () => {
     return (
       <div
         className="modal fade"
         id="staticBackdrop"
-        data-bs-backdrop="static"
+        data-bs-backdrop="true"
         data-bs-keyboard="false"
         tabindex="-1"
         aria-labelledby="staticBackdropLabel"
@@ -180,7 +189,7 @@ const Airplanetable = () => {
                 <div className="d-flex justify-content-between w-50">
                   <button
                     type="button"
-                    className=" popupbtn"
+                    className=" signoutbtn"
                     data-bs-dismiss="modal"
                     onClick={() => editairplanedata()}
                   >
@@ -188,7 +197,7 @@ const Airplanetable = () => {
                   </button>
                   <button
                     type="button"
-                    className="popupbtn"
+                    className="signoutbtn"
                     data-bs-dismiss="modal"
                   >
                     Close
@@ -227,11 +236,13 @@ const Airplanetable = () => {
     );
 
     if (result) {
-      console.log(result);
-      alert("Details has been updated");
       fetchAirplaneData();
-    } else {
-      alert("error");
+      alert(result.data.msg);
+
+       if(id===null){
+        fetchAirplaneData();
+        alert(result.data.msg)
+      }
     }
   };
 
@@ -239,6 +250,7 @@ const Airplanetable = () => {
     fetchAirplaneData();
     if (!localStorage.getItem("token")) {
       navigate("/signin");
+      
     }
   }, [page, perPage]);
 
@@ -249,11 +261,12 @@ const Airplanetable = () => {
         <div className="admintable">
           <div className="d-flex inputs p-2 ">
             <button
-              className="popupbtn"
+              className="signoutbtn"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
+              onClick={addAirplane}
             >
-              Add Airplane details
+              <i class="fa fa-user-plus pe-2"></i>  Add Airplane details
             </button>
           </div>
           <DataTable
