@@ -340,7 +340,7 @@ const Admintable = () => {
             </button>
           </div>
           <DataTable
-            title="Admin Details"
+            title={<div><center><h2 className="mt-4">Admin Details</h2></center></div>}
             columns={columns}
             data={data}
             pagination

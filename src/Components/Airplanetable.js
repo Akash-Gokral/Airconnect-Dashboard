@@ -279,7 +279,7 @@ const Airplanetable = () => {
             </button>
           </div>
           <DataTable
-            title="Airplane Details"
+            title={<div><center><h2 className="mt-4">Airplane Details</h2></center></div>}
             columns={columns}
             data={data}
             pagination

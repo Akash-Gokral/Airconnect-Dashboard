@@ -264,7 +264,7 @@ const Airporttable = () => {
   return (
     <>
        <div className="container-fluid">
-        <div className="row">
+        <div className="row"> 
       <NavBar />
       <Sidebar/>
       <div className="col-12 ">
@@ -280,7 +280,7 @@ const Airporttable = () => {
             </button>
           </div>
           <DataTable
-            title="Airport Details"
+            title={<div><center><h2 className="mt-4">Airport Details</h2></center></div>}
             columns={columns}
             data={data}
             pagination
