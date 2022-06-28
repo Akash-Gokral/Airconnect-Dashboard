@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
+import jwt_decode from "jwt-decode";
 
 const Airporttable = () => {
   const [data, setData] = useState([]);
@@ -196,12 +197,14 @@ const Airporttable = () => {
   const deleteairport = async (row) => {
     const items = localStorage.getItem("token");
     console.log(items);
+    var decoded = jwt_decode(items);
+    console.log(decoded);
     let token = "bearer " + items;
 
     const res = await axios.post(
       `http://143.198.124.185/api/master/deleteAirport`,
       {
-        uid: 1,
+        uid: decoded.id,
         id: row.id,
       },
       {
@@ -225,12 +228,14 @@ const Airporttable = () => {
   const editairportdata = async () => {
     const items = localStorage.getItem("token");
     console.log(items);
+    var decoded = jwt_decode(items);
+    console.log(decoded);
     let token = "bearer " + items;
 
     const result = await axios.post(
       "http://143.198.124.185/api/master/insertEditAirport",
       {
-        uid: 1,
+        uid: decoded.id,
         id: id,
         name: name,
         code: code,

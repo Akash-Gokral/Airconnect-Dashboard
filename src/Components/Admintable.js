@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 import Sidebar from "./Sidebar";
+import jwt_decode from "jwt-decode";
 
 const Admintable = () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ const Admintable = () => {
   const [id, setId] = useState();
   const [mobile, setMobile] = useState();
   const [password, setPassword] = useState();
-  const [block,setBlock] = useState('Active')
+  const [block, setBlock] = useState(false);
 
   const navigate = useNavigate();
 
@@ -42,16 +43,24 @@ const Admintable = () => {
     },
     {
       name: "Block",
-      selector: (row) => (<button className="edit_delete_btn" onClick={() => blockadmin(row)}>
-     <i class="fa fa-user-times"></i>
-    </button> ), 
+      selector: (row) => (
+        <button className="edit_delete_btn" onClick={() => blockadmin(row)}>
+          <i class="fa fa-user-times"></i>
+        </button>
+      ),
       sortable: true,
     },
     {
       name: "Status",
-      selector: (row) => row.isblock, 
+      selector: (row) => {
+        if (row.isblock == 0) {
+          return <p>Active</p>;
+        } else {
+          return <p>Blocked</p>;
+        }
+      },
       sortable: true,
-    },  
+    },
     {
       name: "Edit Admin",
       selector: (row) => (
@@ -77,7 +86,6 @@ const Admintable = () => {
     },
   ];
 
-  
   const editPop = (row) => {
     editadminPopup();
     setEmail(row.email);
@@ -185,13 +193,10 @@ const Admintable = () => {
     );
   };
 
-
   // Get Admin user
   const fetchAdminData = async () => {
     const items = localStorage.getItem("token");
-    console.log(items);
     let token = "bearer " + items;
-
     await axios
       .post(
         `http://143.198.124.185/api/getAdminList`,
@@ -208,7 +213,6 @@ const Admintable = () => {
       )
       .then(function (res) {
         setData(res.data.data);
-        console.log(res);
       })
       .catch(function (err) {
         localStorage.removeItem("token");
@@ -221,12 +225,14 @@ const Admintable = () => {
   const deleteadmin = async (row) => {
     const items = localStorage.getItem("token");
     console.log(items);
+    var decoded = jwt_decode(items);
+    console.log(decoded);
     let token = "bearer " + items;
 
     const res = await axios.post(
       `http://143.198.124.185/api/deleteAdmin`,
       {
-        uid: 1,
+        uid: decoded.id,
         id: row.id,
       },
       {
@@ -240,7 +246,7 @@ const Admintable = () => {
       window.alert(`User ${row.name} has been deleted`);
       fetchAdminData();
     } else {
-      alert(result.msg);
+      console.log(result.msg);
     }
   };
 
@@ -249,12 +255,15 @@ const Admintable = () => {
   const editadmin = async () => {
     const items = localStorage.getItem("token");
     console.log(items);
+    var decoded = jwt_decode(items);
+    console.log(decoded);
+
     let token = "bearer " + items;
 
     const result = await axios.post(
       "http://143.198.124.185/api/insertEditAdmin",
       {
-        uid: 1,
+        uid: decoded.id,
         id: id,
         name: name,
         email: email,
@@ -275,9 +284,8 @@ const Admintable = () => {
       if (id === null) {
         fetchAdminData();
         alert(result.data.msg);
-      }
-      else{
-        alert(result.data.msg)
+      } else {
+        alert(result.data.msg);
       }
     }
   };
@@ -286,13 +294,16 @@ const Admintable = () => {
 
   const blockadmin = async (row) => {
     const items = localStorage.getItem("token");
+    var decoded = jwt_decode(items);
+    console.log(decoded);
     let token = "bearer " + items;
 
     const result = await axios.post(
       "http://143.198.124.185/api/blockAdmin",
       {
-        uid: 1,
+        uid: decoded.id,
         id: row.id,
+        isblock: row.isblock,
       },
       {
         headers: {
@@ -301,18 +312,15 @@ const Admintable = () => {
         },
       }
     );
-      if(result){
-        console.log(result);
-        if(result.data.st == true){
-        alert(`User ${row.name} has been Blocked`)
-        fetchAdminData();
-        }
-        else{
-          alert(result.data.msg)
-        }
-      }
+    const res = await result.data;
+    console.log(res)
 
-    
+    if (res.st == true) {
+      alert(`User ${row.name} has been Blocked`);
+      fetchAdminData();
+    } else {
+      alert(result.data.msg);
+    }
   };
 
   useEffect(() => {
@@ -325,29 +333,35 @@ const Admintable = () => {
     <>
       <div className="container-fluid">
         <div className="row">
-        <NavBar />
-        <Sidebar/>
-        <div className="col-12">
-        <div className="admintable">
-          <div className="d-flex inputs  p-2 ">
-            <button
-              className="signoutbtn"
-              data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop"
-              onClick={addAdmin}
-            >
-              <i class="fa fa-user-plus pe-2"></i> Add Admin
-            </button>
+          <NavBar />
+          <Sidebar />
+          <div className="col-12">
+            <div className="admintable">
+              <div className="d-flex inputs  p-2 ">
+                <button
+                  className="signoutbtn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  onClick={addAdmin}
+                >
+                  <i class="fa fa-user-plus pe-2"></i> Add Admin
+                </button>
+              </div>
+              <DataTable
+                title={
+                  <div>
+                    <center>
+                      <h2 className="mt-4">Admin Details</h2>
+                    </center>
+                  </div>
+                }
+                columns={columns}
+                data={data}
+                pagination
+              />
+            </div>
           </div>
-          <DataTable
-            title={<div><center><h2 className="mt-4">Admin Details</h2></center></div>}
-            columns={columns}
-            data={data}
-            pagination
-          />
         </div>
-        </div>
-        </div>   
       </div>
 
       {editadminPopup()}

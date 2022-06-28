@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
+import jwt_decode from "jwt-decode";
 
 const Airplanetable = () => {
   const [data, setData] = useState([]);
@@ -163,7 +164,6 @@ const Airplanetable = () => {
 
   const fetchAirplaneData = async () => {
     const items = localStorage.getItem("token");
-    console.log(items);
     let token = "bearer " + items;
     await axios
       .post(
@@ -181,7 +181,7 @@ const Airplanetable = () => {
       )
       .then(function (res) {
         setData(res.data.data);
-        console.log(res);
+        // console.log(res);
       })
       .catch(function (err) {
         localStorage.removeItem("token");
@@ -194,12 +194,14 @@ const Airplanetable = () => {
   const deleteairplane = async (row) => {
     const items = localStorage.getItem("token");
     console.log(items);
+    var decoded = jwt_decode(items);
+    console.log(decoded);
     let token = "bearer " + items;
 
     const res = await axios.post(
       `http://143.198.124.185/api/master/deleteAirplane`,
       {
-        uid: 1,
+        uid: decoded.id,
         id: row.id,
       },
       {
@@ -223,12 +225,14 @@ const Airplanetable = () => {
   const editairplanedata = async () => {
     const items = localStorage.getItem("token");
     console.log(items);
+    var decoded = jwt_decode(items);
+    console.log(decoded);
     let token = "bearer " + items;
 
     const result = await axios.post(
       "http://143.198.124.185/api/master/insertEditAirplane",
       {
-        uid: 1,
+        uid: decoded.id,
         id: id,
         name: name,
         plane_no: plane_no,

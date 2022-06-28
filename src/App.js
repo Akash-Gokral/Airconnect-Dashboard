@@ -8,7 +8,7 @@ import Admintable from './Components/Admintable';
 import Airporttable from "./Components/Airporttable"
 import Airplanetable from './Components/Airplanetable';
 
-const App = () => {
+const App = () => {  
   return (
     <>
     <BrowserRouter>
