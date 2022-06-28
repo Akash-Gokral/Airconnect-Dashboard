@@ -16,7 +16,6 @@ const Admintable = () => {
   const [id, setId] = useState();
   const [mobile, setMobile] = useState();
   const [password, setPassword] = useState();
-  const [block, setBlock] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,9 +50,19 @@ const Admintable = () => {
       sortable: true,
     },
     {
+      name: "Unblock",
+      selector: (row) => (
+        <button className="edit_delete_btn" onClick={() => unblockadmin(row)}>
+          <i class="fa fa-user-plus"></i>
+        </button>
+      ),
+      sortable: true,
+    },
+    {
       name: "Status",
-      selector: (row) => {
-        if (row.isblock == 0) {
+      selector: (row) =>
+       {
+        if (row.isblock === 0) {
           return <p>Active</p>;
         } else {
           return <p>Blocked</p>;
@@ -101,6 +110,8 @@ const Admintable = () => {
     setId("");
     setMobile("");
   };
+
+
 
   const editadminPopup = () => {
     return (
@@ -303,7 +314,8 @@ const Admintable = () => {
       {
         uid: decoded.id,
         id: row.id,
-        isblock: row.isblock,
+        isblock: 1,
+
       },
       {
         headers: {
@@ -312,16 +324,48 @@ const Admintable = () => {
         },
       }
     );
-    const res = await result.data;
-    console.log(res)
 
-    if (res.st == true) {
-      alert(`User ${row.name} has been Blocked`);
+
+    if (result) {
       fetchAdminData();
-    } else {
-      alert(result.data.msg);
+        alert(`Admin ${row.name} has been Blocked`);
     }
+
+    
   };
+
+    // UnBlock Admin
+
+    const unblockadmin = async (row) => {
+      const items = localStorage.getItem("token");
+      var decoded = jwt_decode(items);
+      console.log(decoded);
+      let token = "bearer " + items;
+  
+      const result = await axios.post(
+        "http://143.198.124.185/api/blockAdmin",
+        {
+          uid: decoded.id,
+          id: row.id,
+          isblock: 0,
+  
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
+  
+  
+      if (result) {
+        fetchAdminData();
+          alert(`Admin ${row.name} has been unblock`);
+      }
+  
+      
+    };
 
   useEffect(() => {
     fetchAdminData();
