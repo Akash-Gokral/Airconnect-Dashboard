@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import NavBar from "./NavBar";
 import Sidebar from "./Sidebar";
 import jwt_decode from "jwt-decode";
+import Swal from 'sweetalert2'
+
 
 const Admintable = () => {
   const [data, setData] = useState([]);
@@ -43,7 +45,7 @@ const Admintable = () => {
     {
       name: "Block",
       selector: (row) => (
-        <button className="edit_delete_btn" onClick={() => blockadmin(row)}>
+        <button className="edit_delete_btn" onClick={() => blockadmins(row)}>
           <i class="fa fa-user-times"></i>
         </button>
       ),
@@ -52,7 +54,7 @@ const Admintable = () => {
     {
       name: "Unblock",
       selector: (row) => (
-        <button className="edit_delete_btn" onClick={() => unblockadmin(row)}>
+        <button className="edit_delete_btn" onClick={() => unblockadmins(row)}>
           <i class="fa fa-user-plus"></i>
         </button>
       ),
@@ -87,7 +89,7 @@ const Admintable = () => {
     {
       name: "Delete Admin",
       selector: (row) => (
-        <button className="edit_delete_btn" onClick={() => deleteadmin(row)}>
+        <button className="edit_delete_btn" onClick={() => deleteadmins(row)}>
           <i class="fa fa-trash"></i>
         </button>
       ),
@@ -110,6 +112,70 @@ const Admintable = () => {
     setId("");
     setMobile("");
   };
+
+  const deleteadmins = (row)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3f6db8',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteadmin(row);
+        Swal.fire(
+          'Deleted!',
+          `Details of ${row.name} has been deleted.`,
+          'success'
+        )
+      }
+    })
+  }
+
+  const blockadmins=(row)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3f6db8',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Block'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        blockadmin(row);
+        Swal.fire(
+          'Blocked!',
+          `Admin ${row.name} has been blocked.`,
+          'success'
+        )
+      }
+    })
+  }
+  const unblockadmins=(row)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3f6db8',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Unblock'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        unblockadmin(row);
+        Swal.fire(
+          'UnBlocked!',
+          `Admin ${row.name} has been unblocked.`,
+          'success'
+        )
+      }
+    })
+  }
+
+
 
 
 
@@ -253,8 +319,8 @@ const Admintable = () => {
       }
     );
     const result = await res.data;
+    console.log(result)
     if (result.st) {
-      window.alert(`User ${row.name} has been deleted`);
       fetchAdminData();
     } else {
       console.log(result.msg);
@@ -328,7 +394,6 @@ const Admintable = () => {
 
     if (result) {
       fetchAdminData();
-        alert(`Admin ${row.name} has been Blocked`);
     }
 
     
@@ -361,7 +426,6 @@ const Admintable = () => {
   
       if (result) {
         fetchAdminData();
-          alert(`Admin ${row.name} has been unblock`);
       }
   
       
