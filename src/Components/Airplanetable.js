@@ -7,6 +7,7 @@ import axios from "axios";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
 import jwt_decode from "jwt-decode";
+import Swal from 'sweetalert2'
 
 const Airplanetable = () => {
   const [data, setData] = useState([]);
@@ -57,7 +58,7 @@ const Airplanetable = () => {
     {
       name: "Delete Airplane Details",
       selector: (row) => (
-        <button className="edit_delete_btn" onClick={() => deleteairplane(row)}>
+        <button className="edit_delete_btn" onClick={() => deleteairplanes(row)}>
            <i class="fa fa-trash"></i>
         </button>
       ),
@@ -82,6 +83,27 @@ const Airplanetable = () => {
     setPlane_No("");
     setCapacity("");
   };
+
+  const deleteairplanes = (row)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3f6db8',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteairplane(row);
+        Swal.fire(
+          'Deleted!',
+          `Details of ${row.name} Flight no : ${row.plane_no} has been deleted.`,
+          'success'
+        )
+      }
+    })
+  }
 
   const editairplanePopup = () => {
     return (
@@ -212,7 +234,6 @@ const Airplanetable = () => {
     );
     const result = await res.data;
     if (result.st) {
-      window.alert(`Details of ${row.name} ${row.plane_no} has been deleted`);
       fetchAirplaneData();
     } else {
       alert(result.msg);

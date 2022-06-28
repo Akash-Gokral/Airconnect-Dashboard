@@ -7,6 +7,7 @@ import axios from "axios";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
 import jwt_decode from "jwt-decode";
+import Swal from "sweetalert2";
 
 const Airporttable = () => {
   const [data, setData] = useState([]);
@@ -41,7 +42,7 @@ const Airporttable = () => {
       sortable: true,
     },
     {
-      name: "Edit Admin",
+      name: "Edit Airport Details",
       selector: (row) => (
         <button
           className="edit_delete_btn"
@@ -55,9 +56,9 @@ const Airporttable = () => {
       sortable: true,
     },
     {
-      name: "Delete Admin",
+      name: "Delete Airport Details",
       selector: (row) => (
-        <button className="edit_delete_btn" onClick={() => deleteairport(row)}>
+        <button className="edit_delete_btn" onClick={() => deleteairports(row)}>
            <i class="fa fa-trash"></i>
         </button>
       ),
@@ -82,6 +83,26 @@ const Airporttable = () => {
 
   }; 
 
+  const deleteairports = (row)=>{
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3f6db8',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteairport(row);
+        Swal.fire(
+          'Deleted!',
+          `Details of  ${row.name} Airport has been deleted.`,
+          'success'
+        )
+      }
+    })
+  }
 
   const editairportPopup = () => {
     return (
@@ -215,7 +236,6 @@ const Airporttable = () => {
     );
     const result = await res.data;
     if (result.st) {
-      window.alert(`Details of ${row.name} has been deleted`);
       fetchAirportData();
     } else {
       alert(result.msg);
