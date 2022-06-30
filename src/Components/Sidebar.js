@@ -11,7 +11,7 @@ function Sidebar() {
         </Link>
         <div className="main-sidebar-body">
           <ul className="nav  hor-menu">
-            <li className="nav-label">Users</li>
+            <li className="nav-label">Admins</li>
             <li className="nav-item">
               <Link to="/home">
                 <a className="nav-link">
@@ -24,7 +24,15 @@ function Sidebar() {
               <Link to="/admintable">
                 <a className="nav-link">
                   <i class="icon icon-people"></i>
-                  <span className="sidemenu-label">Admins</span>
+                  <span className="sidemenu-label">Users</span>
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/Officetable">
+                <a className="nav-link">
+                  <i class="icon icon-people"></i>
+                  <span className="sidemenu-label">Offices</span>
                 </a>
               </Link>
             </li>

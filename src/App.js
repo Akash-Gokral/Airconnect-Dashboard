@@ -7,6 +7,7 @@ import Forgetpass from './Components/Forgetpass';
 import Admintable from './Components/Admintable';
 import Airporttable from "./Components/Airporttable"
 import Airplanetable from './Components/Airplanetable';
+import Officetable from './Officetable';
 
 const App = () => {  
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Route path="/" element={  <Signin/>}/>
       <Route path="/home" element={  <Home/>}/>
       <Route path="/admintable" element={  <Admintable/>}/>
+      <Route path="/officetable" element={  <Officetable/>}/>
       <Route path="/airporttable" element={  <Airporttable/>}/>
       <Route path="/airplanetable" element={  <Airplanetable/>}/>
       <Route path="/signin" element={  <Signin/>} />

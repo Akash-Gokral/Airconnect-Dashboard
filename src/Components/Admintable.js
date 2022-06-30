@@ -17,6 +17,8 @@ const Admintable = () => {
   const [id, setId] = useState();
   const [mobile, setMobile] = useState();
   const [password, setPassword] = useState();
+  const [officeid, setOfficeid] = useState();
+  const [officecode, setOfficecode] = useState();
 
   const navigate = useNavigate();
 
@@ -24,6 +26,16 @@ const Admintable = () => {
     {
       name: "ID",
       selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Office ID",
+      selector: (row) => row.office_id,
+      sortable: true,
+    },
+    {
+      name: "Office Code",
+      selector: (row) => row.office_code,
       sortable: true,
     },
     {
@@ -58,21 +70,22 @@ const Admintable = () => {
               </div>
             </>
           );
-        } else if(row.isblock === 1) {
+        } else if (row.isblock === 1) {
           return (
-          <>
-            <div class="form-check form-switch">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckChecked"
-                checked
-                onClick={() => unblockadmins(row)}
-              />
-            </div>
-          </>
-        )}
+            <>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckChecked"
+                  checked
+                  onClick={() => unblockadmins(row)}
+                />
+              </div>
+            </>
+          );
+        }
       },
       sortable: true,
     },
@@ -118,6 +131,8 @@ const Admintable = () => {
     setName(row.name);
     setId(row.id);
     setMobile(row.mobile);
+    setOfficeid(row.office_id);
+    setOfficecode(row.office_code);
   };
 
   const addAdmin = () => {
@@ -126,6 +141,8 @@ const Admintable = () => {
     setName("");
     setId("");
     setMobile("");
+    setOfficeid("");
+    setOfficecode("");
   };
 
   const deleteadmins = (row) => {
@@ -161,9 +178,9 @@ const Admintable = () => {
       if (result.isConfirmed) {
         blockadmin(row);
         Swal.fire("Blocked!", `Admin ${row.name} has been blocked.`, "success");
-      }else{
+      } else {
         window.location.reload();
-        fetchAdminData(); 
+        fetchAdminData();
       }
     });
   };
@@ -183,9 +200,9 @@ const Admintable = () => {
           `Admin ${row.name} has been unblocked.`,
           "success"
         );
-      }else{
+      } else {
         window.location.reload();
-        fetchAdminData();   
+        fetchAdminData();
       }
     });
   };
@@ -216,6 +233,18 @@ const Admintable = () => {
                     className="form-control"
                     value={id}
                     onChange={(e) => setId(e.target.value)}
+                  />
+                  <label className="form-label">Office ID</label>
+                  <input
+                    className="form-control"
+                    value={officeid}
+                    onChange={(e) => setOfficeid(e.target.value)}
+                  />
+                  <label className="form-label">Office Code</label>
+                  <input
+                    className="form-control"
+                    value={officecode}
+                    onChange={(e) => setOfficecode(e.target.value)}
                   />
 
                   <label className="form-label">Name</label>
@@ -357,6 +386,7 @@ const Admintable = () => {
         email: email,
         mobile: mobile,
         password: password,
+        officeid: officeid,
       },
       {
         headers: {
