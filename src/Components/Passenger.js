@@ -137,6 +137,7 @@ const Passenger = () => {
                   <label className="form-label">ID</label>
                   <input
                     className="form-control"
+                    type="number"
                     value={id}
                     onChange={(e) => setId(e.target.value)}
                   />
@@ -309,7 +310,7 @@ const Passenger = () => {
         <div className="row">
           <NavBar />
           <Sidebar />
-          <div className="col-12">
+          <div className="col-12 admintable_container">
             <div className="admintable">
               <div className="d-flex inputs p-2 ">
                 <button
@@ -325,7 +326,7 @@ const Passenger = () => {
                 title={
                   <div>
                     <center>
-                      <h2 className="mt-4">Passenger Details</h2>
+                      <h2 className="mt-4">Passengers Details</h2>
                     </center>
                   </div>
                 }

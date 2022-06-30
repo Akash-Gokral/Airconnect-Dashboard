@@ -9,6 +9,7 @@ import Airporttable from "./Components/Airporttable"
 import Airplanetable from './Components/Airplanetable';
 import Officetable from './Components/Officetable';
 import Passenger from './Components/Passenger';
+import Pilot from './Components/Pilot';
 
 const App = () => {  
   return (
@@ -22,6 +23,7 @@ const App = () => {
       <Route path="/airporttable" element={  <Airporttable/>}/>
       <Route path="/airplanetable" element={  <Airplanetable/>}/>
       <Route path="/passenger" element={  <Passenger/>}/>
+      <Route path="/pilot" element={  <Pilot/>}/>
       <Route path="/signin" element={  <Signin/>} />
       <Route path="/signin/password" element={  <Forgetpass/>} />
       </Routes> 

@@ -62,6 +62,14 @@ function Sidebar() {
                 </a>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/pilot">
+                <a className="nav-link with-sub" href="">
+                <i class="icon icon-people"></i>
+                  <span className="sidemenu-label">Pilots</span>
+                </a>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

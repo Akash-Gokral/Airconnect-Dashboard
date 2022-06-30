@@ -1,7 +1,12 @@
 
+
+.admintable_container{
+padding: 10px 10px 10px 250px !important;
+height: 100vh;
+
+}
 .admintable{
-  margin: 68px 0px;
- padding: 10px 250px;
+margin-top: 80px;
 }
 .edit_delete_btn {
   padding: 5px 15px;
@@ -24,6 +29,7 @@
   align-items: center;
 
 }
+
 .inputs {
   justify-content: flex-end !important;
 }
@@ -51,10 +57,7 @@ input:focus {
   margin-bottom: 0 !important;
 }
 
-.search_div {
-  display: flex !important;
-  justify-content: end;
-}
+
 
 .edit_delete_btn button {
   background: transparent;
@@ -62,7 +65,7 @@ input:focus {
   text-decoration: underline;
   margin: 0 3px;
 }
-body{
+.admintable_container{
   position: relative;
 }
 .main-footer{
@@ -72,9 +75,11 @@ body{
 }
 
 @media screen and (max-width:760px){
-.admintable{
+.admintable_container{
   padding: 0 !important;
 }
+
+
 html {
   position: relative;
 }

@@ -231,12 +231,14 @@ const Admintable = () => {
                   <label className="form-label">ID</label>
                   <input
                     className="form-control"
+                    type="number"
                     value={id}
                     onChange={(e) => setId(e.target.value)}
                   />
                   <label className="form-label">Office ID</label>
                   <input
                     className="form-control"
+                    type="number"
                     value={officeid}
                     onChange={(e) => setOfficeid(e.target.value)}
                   />
@@ -477,7 +479,7 @@ const Admintable = () => {
         <div className="row">
           <NavBar />
           <Sidebar />
-          <div className="col-12">
+          <div className="col-12 admintable_container">
             <div className="admintable">
               <div className="d-flex inputs  p-2 ">
                 <button
