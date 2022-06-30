@@ -7,7 +7,7 @@ import Forgetpass from './Components/Forgetpass';
 import Admintable from './Components/Admintable';
 import Airporttable from "./Components/Airporttable"
 import Airplanetable from './Components/Airplanetable';
-import Officetable from './Officetable';
+import Officetable from './Components/Officetable';
 
 const App = () => {  
   return (

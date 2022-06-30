@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import Footer from "./Components/Footer";
-import NavBar from "./Components/NavBar";
-import Sidebar from "./Components/Sidebar";
+import Footer from "./Footer";
+import NavBar from "./NavBar";
+import Sidebar from "./Sidebar";
 import jwt_decode from "jwt-decode";
 
 const Officetable = () => {
