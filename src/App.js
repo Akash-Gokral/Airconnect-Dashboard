@@ -8,6 +8,7 @@ import Admintable from './Components/Admintable';
 import Airporttable from "./Components/Airporttable"
 import Airplanetable from './Components/Airplanetable';
 import Officetable from './Components/Officetable';
+import Passenger from './Components/Passenger';
 
 const App = () => {  
   return (
@@ -20,6 +21,7 @@ const App = () => {
       <Route path="/officetable" element={  <Officetable/>}/>
       <Route path="/airporttable" element={  <Airporttable/>}/>
       <Route path="/airplanetable" element={  <Airplanetable/>}/>
+      <Route path="/passenger" element={  <Passenger/>}/>
       <Route path="/signin" element={  <Signin/>} />
       <Route path="/signin/password" element={  <Forgetpass/>} />
       </Routes> 
