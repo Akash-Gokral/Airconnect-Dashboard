@@ -58,7 +58,7 @@ const Admintable = () => {
               </div>
             </>
           );
-        } else if( (row.isblock === 1)) {
+        } else if(row.isblock === 1) {
           return (
           <>
             <div class="form-check form-switch">
@@ -161,6 +161,9 @@ const Admintable = () => {
       if (result.isConfirmed) {
         blockadmin(row);
         Swal.fire("Blocked!", `Admin ${row.name} has been blocked.`, "success");
+      }else{
+        window.location.reload();
+        fetchAdminData(); 
       }
     });
   };
@@ -180,6 +183,9 @@ const Admintable = () => {
           `Admin ${row.name} has been unblocked.`,
           "success"
         );
+      }else{
+        window.location.reload();
+        fetchAdminData();   
       }
     });
   };
@@ -430,6 +436,7 @@ const Admintable = () => {
 
   useEffect(() => {
     fetchAdminData();
+
     if (!localStorage.getItem("token")) {
       navigate("/signin");
     }
