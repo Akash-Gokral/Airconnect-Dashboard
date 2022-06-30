@@ -6,8 +6,7 @@ import Footer from "./Footer";
 import NavBar from "./NavBar";
 import Sidebar from "./Sidebar";
 import jwt_decode from "jwt-decode";
-import Swal from 'sweetalert2'
-
+import Swal from "sweetalert2";
 
 const Admintable = () => {
   const [data, setData] = useState([]);
@@ -44,26 +43,42 @@ const Admintable = () => {
     },
     {
       name: "Block",
-      selector: (row) => (
-        <button className="edit_delete_btn" onClick={() => blockadmins(row)}>
-          <i class="fa fa-user-times"></i>
-        </button>
-      ),
-      sortable: true,
-    },
-    {
-      name: "Unblock",
-      selector: (row) => (
-        <button className="edit_delete_btn" onClick={() => unblockadmins(row)}>
-          <i class="fa fa-user-plus"></i>
-        </button>
-      ),
+      selector: (row) => {
+        if (row.isblock === 0) {
+          return (
+            <>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  onClick={() => blockadmins(row)}
+                />
+              </div>
+            </>
+          );
+        } else if( (row.isblock === 1)) {
+          return (
+          <>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckChecked"
+                checked
+                onClick={() => unblockadmins(row)}
+              />
+            </div>
+          </>
+        )}
+      },
       sortable: true,
     },
     {
       name: "Status",
-      selector: (row) =>
-       {
+      selector: (row) => {
         if (row.isblock === 0) {
           return <p>Active</p>;
         } else {
@@ -113,71 +128,61 @@ const Admintable = () => {
     setMobile("");
   };
 
-  const deleteadmins = (row)=>{
+  const deleteadmins = (row) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure you want to delete it?",
       text: "You won't be able to revert this!",
-      icon: 'question',
+      icon: "question",
       showCancelButton: true,
-      confirmButtonColor: '#3f6db8',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3f6db8",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         deleteadmin(row);
         Swal.fire(
-          'Deleted!',
+          "Deleted!",
           `Details of ${row.name} has been deleted.`,
-          'success'
-        )
+          "success"
+        );
       }
-    })
-  }
+    });
+  };
 
-  const blockadmins=(row)=>{
+  const blockadmins = (row) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'question',
+      title: "Are you sure you want to block?",
+      icon: "question",
       showCancelButton: true,
-      confirmButtonColor: '#3f6db8',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Block'
+      confirmButtonColor: "#3f6db8",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
         blockadmin(row);
-        Swal.fire(
-          'Blocked!',
-          `Admin ${row.name} has been blocked.`,
-          'success'
-        )
+        Swal.fire("Blocked!", `Admin ${row.name} has been blocked.`, "success");
       }
-    })
-  }
-  const unblockadmins=(row)=>{
+    });
+  };
+  const unblockadmins = (row) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'question',
+      title: "Are you sure you want to unblock?",
+      icon: "question",
       showCancelButton: true,
-      confirmButtonColor: '#3f6db8',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Unblock'
+      confirmButtonColor: "#3f6db8",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
         unblockadmin(row);
         Swal.fire(
-          'UnBlocked!',
+          "UnBlocked!",
           `Admin ${row.name} has been unblocked.`,
-          'success'
-        )
+          "success"
+        );
       }
-    })
-  }
-
-
-
-
+    });
+  };
 
   const editadminPopup = () => {
     return (
@@ -319,7 +324,7 @@ const Admintable = () => {
       }
     );
     const result = await res.data;
-    console.log(result)
+    console.log(result);
     if (result.st) {
       fetchAdminData();
     } else {
@@ -381,7 +386,6 @@ const Admintable = () => {
         uid: decoded.id,
         id: row.id,
         isblock: 1,
-
       },
       {
         headers: {
@@ -391,45 +395,38 @@ const Admintable = () => {
       }
     );
 
+    if (result) {
+      fetchAdminData();
+    }
+  };
+
+  // UnBlock Admin
+
+  const unblockadmin = async (row) => {
+    const items = localStorage.getItem("token");
+    var decoded = jwt_decode(items);
+    console.log(decoded);
+    let token = "bearer " + items;
+
+    const result = await axios.post(
+      "http://143.198.124.185/api/blockAdmin",
+      {
+        uid: decoded.id,
+        id: row.id,
+        isblock: 0,
+      },
+      {
+        headers: {
+          "content-type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
 
     if (result) {
       fetchAdminData();
     }
-
-    
   };
-
-    // UnBlock Admin
-
-    const unblockadmin = async (row) => {
-      const items = localStorage.getItem("token");
-      var decoded = jwt_decode(items);
-      console.log(decoded);
-      let token = "bearer " + items;
-  
-      const result = await axios.post(
-        "http://143.198.124.185/api/blockAdmin",
-        {
-          uid: decoded.id,
-          id: row.id,
-          isblock: 0,
-  
-        },
-        {
-          headers: {
-            "content-type": "application/json",
-            Authorization: token,
-          },
-        }
-      );
-  
-  
-      if (result) {
-        fetchAdminData();
-      }
-  
-      
-    };
 
   useEffect(() => {
     fetchAdminData();
